@@ -90,15 +90,15 @@ figma.ui.on('message', uiResponse => {
             coordinates.bottomRightX = currentUserSelection.vectorNetwork.vertices[3].x;
             coordinates.bottomRightY = currentUserSelection.vectorNetwork.vertices[3].y;
         }
-        // invertImages(selectedNode).then(arr => {
-        // 	figma.ui.postMessage({
-        // 		type: 'networkRequest',
-        // 		uint8Array: arr,
-        // 		ponits: coordinates,
-        // 		width: currentUserSelection.width,
-        // 		height: currentUserSelection.height
-        // 	});
-        // });
+        invertImages(selectedNode).then(arr => {
+            figma.ui.postMessage({
+                type: 'networkRequest',
+                uint8Array: arr,
+                ponits: coordinates,
+                width: currentUserSelection.width,
+                height: currentUserSelection.height
+            });
+        });
         if (selectedNode.type === 'FRAME' || selectedNode.type === 'GROUP') {
             invertNode(selectedNode).then(response => {
                 figma.ui.postMessage({
