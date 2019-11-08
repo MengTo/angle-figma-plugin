@@ -194,9 +194,19 @@
 		return imageName;
 	}
 
-	function fill(pathPoints, width, height, imageName) {
+	function fill(pathPoints, width, height, imageName, angle) {
 		// https://res.cloudinary.com/daqbtlcya/image/upload/c_fit,e_distort:0:238:347:0:1094:579:749:871,h_871,w_1094/v1573028294/34448089.jpg
-
+		var rotationAngle = 0;
+		if (angle === 'Rotate Left') {
+			rotationAngle = -90;
+		} else if (angle === 'Rotate Right') {
+			rotationAngle = 90;
+		} else if (angle === 'Flip') {
+			rotationAngle = 180;
+		} else {
+			rotationAngle = 0;
+		}
+		console.log(rotationAngle);
 		const url =
 			'https://res.cloudinary.com/daqbtlcya/image/upload/c_fit,e_distort:' +
 			pathPoints.topLeftX +
@@ -220,6 +230,9 @@
 			',' +
 			'w_' +
 			width +
+			'/' +
+			'a_' +
+			rotationAngle +
 			'/' +
 			imageName +
 			'.jpg';
@@ -262,23 +275,25 @@
 	var selectedQuality = '';
 	var selectedOrientation = '';
 
-	// get selected artboard
-	document.getElementById('artboard-select').addEventListener('change', function(event) {
-		selectedArtboard = event.target.value;
-	});
+	try {
+		// get selected artboard
+		document.getElementById('artboard-select').addEventListener('change', function(event) {
+			selectedArtboard = event.target.value;
+		});
 
-	// get selected pixel density
-	document.getElementById('pixel-density-select').addEventListener('change', function(event) {
-		selectedPixelDensity = event.target.value;
-	});
+		// get selected pixel density
+		document.getElementById('pixel-density-select').addEventListener('change', function(event) {
+			selectedPixelDensity = event.target.value;
+		});
 
-	document.getElementById('quality-select').addEventListener('change', function(event) {
-		selectedQuality = event.target.value;
-	});
+		document.getElementById('quality-select').addEventListener('change', function(event) {
+			selectedQuality = event.target.value;
+		});
 
-	document.getElementById('orientation-select').addEventListener('change', function(event) {
-		selectedOrientation = event.target.value;
-	});
+		document.getElementById('orientation-select').addEventListener('change', function(event) {
+			selectedOrientation = event.target.value;
+		});
+	} catch (error) {}
 
 	function create() {
 		parent.postMessage(
@@ -319,15 +334,16 @@
 			const coordinates = event.data.pluginMessage.ponits;
 			const width = event.data.pluginMessage.width;
 			const height = event.data.pluginMessage.height;
+			const oreintation = event.data.pluginMessage.selectedOrientation;
+
 			uploadCloudinaryFile(base64String).then(name => {
-				xhrBinary(fill(coordinates, width, height, name)).then(response => {
+				xhrBinary(fill(coordinates, width, height, name, oreintation)).then(response => {
 					parent.postMessage(
 						{ pluginMessage: { type: 'networkResponse', response } },
 						'*'
 					);
 				});
 			});
-			// uploadCloudinaryFile(base64String);
 		}
 	});
 </script>

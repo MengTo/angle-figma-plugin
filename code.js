@@ -90,6 +90,9 @@ figma.ui.on('message', uiResponse => {
             coordinates.bottomRightX = currentUserSelection.vectorNetwork.vertices[3].x;
             coordinates.bottomRightY = currentUserSelection.vectorNetwork.vertices[3].y;
         }
+        const selectedOrientation = uiResponse.selectedOrientation;
+        const selectedQuality = uiResponse.selectedQuality;
+        const selectedPixelDensity = uiResponse.selectedPixelDensity;
         invertImages(selectedNode).then(arr => {
             figma.ui.postMessage({
                 type: 'networkRequest',
@@ -99,9 +102,13 @@ figma.ui.on('message', uiResponse => {
                 height: currentUserSelection.height
             });
         });
+        // User Selection Of Artboard
         if (selectedNode.type === 'FRAME' || selectedNode.type === 'GROUP') {
             invertNode(selectedNode).then(response => {
                 figma.ui.postMessage({
+                    selectedOrientation: selectedOrientation,
+                    selectedQuality: selectedQuality,
+                    selectedPixelDensity: selectedPixelDensity,
                     type: 'networkRequest',
                     uint8Array: response,
                     ponits: coordinates,
@@ -109,7 +116,18 @@ figma.ui.on('message', uiResponse => {
                     height: currentUserSelection.height
                 });
             });
+            // base image if the selected artboard is a frame or group
+            for (const selectedNode of figma.currentPage.selection) {
+                const fills = clone(selectedNode.fills || []);
+                fills.push({
+                    type: 'IMAGE',
+                    scaleMode: 'FIT',
+                    imageHash: figma.createImage(new Uint8Array()).hash
+                });
+                currentUserSelection.fills = fills;
+            }
         }
+        // base image if the selected artboard is an image
         const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
         const selectedImage = selectedNode.fills;
         cloneOfScreen[0] = selectedImage[0];
