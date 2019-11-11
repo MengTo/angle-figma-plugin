@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-figma.showUI(__html__, { width: 800, height: 600 });
+figma.showUI(__html__, { width: 790, height: 475 });
 // figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
 // All Variables
 const currentUserSelection = figma.currentPage.selection[0];

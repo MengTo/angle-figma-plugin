@@ -1,28 +1,61 @@
 <head>
 	<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+	<style>
+		#create {
+			background-color: #3c11ee;
+		}
+		#cancel {
+			background-color: #b6c4ff;
+		}
+		#version {
+			color: #999999;
+		}
+		#version-two {
+			margin-top: -24px;
+			color: #999999;
+		}
+	</style>
 </head>
 <html>
 	<div class="container mx-auto p-16">
 		<div class="flex justify-center">
-			<img
-				class="rounded-sm h-20"
-				src="https://designcode.io/images/Angle/Logo-Angle-Plugin.png"
-			/>
+			<svg
+				width="40"
+				height="40"
+				viewBox="0 0 40 40"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					d="M27.8454 29.0462H36.9975L24.6621 7.73535L20.1524 15.1876L23.6194 21.4245L27.8454 29.0462Z"
+					fill="#3C10EE"
+				/>
+				<path
+					d="M3.78524 39.0637L0.252649 33.0068C-0.082734 32.4318 -0.0843078 31.7243 0.248513 31.1477L9.54418 15.0466L17.4573 0.962321C18.1784 -0.321219 20.0475 -0.320658 20.7678 0.963311L24.1605 7.01049C24.4908 7.59916 24.4752 8.31784 24.1196 8.89202L21.2482 13.5284L7.08473 39.0297C6.37472 40.308 4.52214 40.3272 3.78524 39.0637Z"
+					fill="#B6C4FF"
+				/>
+				<path
+					d="M29.862 29.0462H36.9582L39.7517 33.9204C40.4658 35.1666 39.5544 36.7106 38.1044 36.7106H18.056C16.6159 36.7106 15.7034 35.1853 16.3981 33.9395L18.5871 30.0138C18.92 29.4169 19.5552 29.0462 20.2451 29.0462H29.862Z"
+					fill="#2CA4FE"
+				/>
+			</svg>
 		</div>
 
 		<div class="flex justify-center">
-			<h1 class="text-5xl">Apply to Mockup</h1>
+			<h1 class="text-3xl font-bold">Apply to Mockup</h1>
 		</div>
 
 		<div class="flex justify-center">
-			<p>Choose an Artboard to apply onto your selected shape</p>
+			<p class="text-base text-gray-500 tracking-wide pt-2">
+				Choose a Frame to apply onto your selected shape
+			</p>
 		</div>
 
-		<div class="flex justify-center mt-10">
-			<div class="mr-5">
-				<p class="text-lg font-medium text-indigo-700">Artboard:</p>
+		<div class="flex justify-center mt-5 ml-8">
+			<div class="mr-8">
+				<p class="text-base text-gray-500 tracking-wide pt-2">Artboard</p>
 
-				<div class="inline-block relative w-50">
+				<div class="inline-block relative w-32">
 					<select
 						class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
 						id="artboard-select"
@@ -47,8 +80,8 @@
 				</div>
 			</div>
 
-			<div class="mr-2">
-				<p class="text-lg font-medium text-purple-600">Pixel Density:</p>
+			<div class="mr-8">
+				<p class="text-base text-gray-500 tracking-wide pt-2">Pixel Density</p>
 
 				<div class="inline-block relative w-50">
 					<select
@@ -76,8 +109,8 @@
 				</div>
 			</div>
 
-			<div class="mr-5">
-				<p class="text-lg font-medium text-pink-500">Quality:</p>
+			<div class="mr-8">
+				<p class="text-base text-gray-500 tracking-wide pt-2">Quality</p>
 
 				<div class="inline-block relative w-50">
 					<select
@@ -105,8 +138,8 @@
 				</div>
 			</div>
 
-			<div class="mr-5">
-				<p class="text-lg font-medium text-blue-500">Orientation:</p>
+			<div class="mr-8">
+				<p class="text-base text-gray-500 tracking-wide pt-2">Orientation</p>
 
 				<div class="inline-block relative w-50">
 					<select
@@ -137,21 +170,22 @@
 			</div>
 		</div>
 
-		<div class="flex justify-center mt-10">
-			<button
-				id="create"
-				onclick="create()"
-				class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded mr-12"
-			>
-				Apply
-			</button>
-			<button
-				class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
-				onclick="cancel()"
-			>
+		<div class="flex justify-end mt-10 mr-8">
+			<button id="cancel" class="text-black py-2 px-4 rounded-lg mr-5" onclick="cancel()">
 				Cancel
 			</button>
+			<button id="create" onclick="create()" class="text-white py-2 px-4 rounded-lg">
+				Apply Mockup
+			</button>
 		</div>
+	</div>
+	<hr />
+	<div class="flex justify-start">
+		<p id="version" class="tracking-wide mt-4 ml-4">Version 1.0</p>
+	</div>
+
+	<div class="flex justify-end">
+		<p id="version-two" class="tracking-wide mr-4">Version 1.0</p>
 	</div>
 </html>
 
