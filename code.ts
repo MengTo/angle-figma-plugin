@@ -146,5 +146,7 @@ figma.ui.on('message', uiResponse => {
 		figma.currentPage.selection[0].fills = cloneOfScreen;
 
 		figma.closePlugin();
+	} else if (uiResponse.type === 'cancel-modal') {
+		figma.closePlugin();
 	}
 });
