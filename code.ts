@@ -80,93 +80,102 @@ function angleFill(array, node) {
 
 // Listen For All postMessages Coming Back From The UI
 figma.ui.on("message", uiResponse => {
-  if (uiResponse.type === "convertSelectedArtboard") {
-    const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
+  try {
+    if (uiResponse.type === "convertSelectedArtboard") {
+      const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
 
-    const coordinates = {};
-    if (currentUserSelection.type === "VECTOR") {
-      coordinates.topLeftX = currentUserSelection.vectorNetwork.vertices[0].x;
-      coordinates.topLeftY = currentUserSelection.vectorNetwork.vertices[0].y;
+      const coordinates = {};
+      if (currentUserSelection.type === "VECTOR") {
+        coordinates.topLeftX = currentUserSelection.vectorNetwork.vertices[0].x;
+        coordinates.topLeftY = currentUserSelection.vectorNetwork.vertices[0].y;
 
-      // // TOP RIGHT
-      coordinates.topRightX = currentUserSelection.vectorNetwork.vertices[1].x;
-      coordinates.topRightY = currentUserSelection.vectorNetwork.vertices[1].y;
+        // // TOP RIGHT
+        coordinates.topRightX =
+          currentUserSelection.vectorNetwork.vertices[1].x;
+        coordinates.topRightY =
+          currentUserSelection.vectorNetwork.vertices[1].y;
 
-      // // BOTTOM LEFT
-      coordinates.bottomLeftX =
-        currentUserSelection.vectorNetwork.vertices[2].x;
-      coordinates.bottomLeftY =
-        currentUserSelection.vectorNetwork.vertices[2].y;
+        // // BOTTOM LEFT
+        coordinates.bottomLeftX =
+          currentUserSelection.vectorNetwork.vertices[2].x;
+        coordinates.bottomLeftY =
+          currentUserSelection.vectorNetwork.vertices[2].y;
 
-      // // BOTTOM RIGHT
-      coordinates.bottomRightX =
-        currentUserSelection.vectorNetwork.vertices[3].x;
-      coordinates.bottomRightY =
-        currentUserSelection.vectorNetwork.vertices[3].y;
+        // // BOTTOM RIGHT
+        coordinates.bottomRightX =
+          currentUserSelection.vectorNetwork.vertices[3].x;
+        coordinates.bottomRightY =
+          currentUserSelection.vectorNetwork.vertices[3].y;
 
-      invertImages(selectedNode).then(arr => {
-        figma.ui.postMessage({
-          type: "networkRequest",
-          uint8Array: arr,
-          ponits: coordinates,
-          width: currentUserSelection.width,
-          height: currentUserSelection.height
+        invertImages(selectedNode).then(arr => {
+          figma.ui.postMessage({
+            type: "networkRequest",
+            uint8Array: arr,
+            ponits: coordinates,
+            width: currentUserSelection.width,
+            height: currentUserSelection.height
+          });
         });
-      });
-    }
-
-    if (currentUserSelection.type === "RECTANGLE") {
-      figma.notify(
-        `Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`
-      );
-    }
-
-    const selectedOrientation = uiResponse.selectedOrientation;
-    const selectedQuality = uiResponse.selectedQuality;
-    const selectedPixelDensity = uiResponse.selectedPixelDensity;
-
-    // User Selection Of Artboard
-    if (selectedNode.type === "FRAME" || selectedNode.type === "GROUP") {
-      invertNode(selectedNode).then(response => {
-        figma.ui.postMessage({
-          selectedOrientation: selectedOrientation,
-          selectedQuality: selectedQuality,
-          selectedPixelDensity: selectedPixelDensity,
-          type: "networkRequest",
-          uint8Array: response,
-          ponits: coordinates,
-          width: currentUserSelection.width,
-          height: currentUserSelection.height
-        });
-      });
-
-      // base image if the selected artboard is a frame or group
-      for (const selectedNode of figma.currentPage.selection) {
-        const fills = clone(selectedNode.fills || []);
-        fills.push({
-          type: "IMAGE",
-          scaleMode: "FIT",
-          imageHash: figma.createImage(new Uint8Array()).hash
-        });
-        currentUserSelection.fills = fills;
       }
+
+      if (currentUserSelection.type === "RECTANGLE") {
+        figma.notify(
+          `Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`
+        );
+      }
+
+      const selectedOrientation = uiResponse.selectedOrientation;
+      const selectedQuality = uiResponse.selectedQuality;
+      const selectedPixelDensity = uiResponse.selectedPixelDensity;
+
+      // User Selection Of Artboard
+      if (selectedNode.type === "FRAME" || selectedNode.type === "GROUP") {
+        invertNode(selectedNode).then(response => {
+          figma.ui.postMessage({
+            selectedOrientation: selectedOrientation,
+            selectedQuality: selectedQuality,
+            selectedPixelDensity: selectedPixelDensity,
+            type: "networkRequest",
+            uint8Array: response,
+            ponits: coordinates,
+            width: currentUserSelection.width,
+            height: currentUserSelection.height
+          });
+        });
+
+        // base image if the selected artboard is a frame or group
+        for (const selectedNode of figma.currentPage.selection) {
+          const fills = clone(selectedNode.fills || []);
+          fills.push({
+            type: "IMAGE",
+            scaleMode: "FIT",
+            imageHash: figma.createImage(new Uint8Array()).hash
+          });
+          currentUserSelection.fills = fills;
+        }
+      }
+
+      // base image if the selected artboard is an image
+      const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
+      const selectedImage = selectedNode.fills;
+      cloneOfScreen[0] = selectedImage[0];
+      figma.currentPage.selection[0].fills = cloneOfScreen;
+    } else if (uiResponse.type === "networkResponse") {
+      const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
+      const selectedImage = angleFill(
+        uiResponse.response,
+        currentUserSelection
+      );
+      cloneOfScreen[0] = selectedImage[0];
+      figma.currentPage.selection[0].fills = cloneOfScreen;
+
+      figma.closePlugin();
+    } else if (uiResponse.type === "cancel-modal") {
+      figma.closePlugin();
+    } else if (uiResponse.type === "netWorkError") {
+      figma.notify(uiResponse.message);
     }
-
-    // base image if the selected artboard is an image
-    const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
-    const selectedImage = selectedNode.fills;
-    cloneOfScreen[0] = selectedImage[0];
-    figma.currentPage.selection[0].fills = cloneOfScreen;
-  } else if (uiResponse.type === "networkResponse") {
-    const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
-    const selectedImage = angleFill(uiResponse.response, currentUserSelection);
-    cloneOfScreen[0] = selectedImage[0];
-    figma.currentPage.selection[0].fills = cloneOfScreen;
-
-    figma.closePlugin();
-  } else if (uiResponse.type === "cancel-modal") {
-    figma.closePlugin();
-  } else if (uiResponse.type === "netWorkError") {
-    figma.notify(uiResponse.message);
+  } catch (error) {
+    console.log("loading...");
   }
 });

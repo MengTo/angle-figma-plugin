@@ -17,6 +17,33 @@
       margin-top: -24px;
       color: #999999;
     }
+
+    .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+      margin: 0px 5px;
+      animation: wave 1.5s ease-in-out infinite;
+    }
+    .circle-1 {
+      animation-delay: 0ms;
+    }
+    .circle-2 {
+      animation-delay: 200ms;
+    }
+    .circle-3 {
+      animation-delay: 400ms;
+    }
+    @keyframes wave {
+      30% {
+        background-color: #3c11ee;
+      }
+      0%,
+      60%,
+      100% {
+        background-color: #b6c4ff;
+      }
+    }
   </style>
 </head>
 <html>
@@ -173,6 +200,12 @@
       </div>
     </div>
 
+    <div id="loading" class="flex justify-center mt-10 invisible">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+      <div class="circle circle-3"></div>
+    </div>
+
     <div class="flex justify-end mt-10 mr-8">
       <button
         id="cancel"
@@ -287,10 +320,10 @@
         pathPoints.bottomRightY +
         "," +
         "h_" +
-        height +
+        Math.round(height) +
         "," +
         "w_" +
-        width +
+        Math.round(width) +
         "/" +
         "a_" +
         rotationAngle +
@@ -374,6 +407,11 @@
   } catch (error) {}
 
   function create() {
+    const loader = document.getElementById("loading");
+    const createButton = document.getElementById("create");
+    createButton.classList.add("invisible");
+    loader.classList.remove("invisible");
+
     parent.postMessage(
       {
         pluginMessage: {
