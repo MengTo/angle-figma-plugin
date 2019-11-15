@@ -267,11 +267,13 @@
 		return imageName;
 	}
 
-	function fill(pathPoints, width, height, imageName, angle, pixel) {
+	function fill(pathPoints, width, height, imageName, angle, pixel, quality) {
 		// https://res.cloudinary.com/daqbtlcya/image/upload/c_fit,e_distort:0:238:347:0:1094:579:749:871,h_871,w_1094/v1573028294/34448089.jpg
+		console.log(quality);
 		var rotationAngle = 0;
 		var coordinates = {};
 		var pixelDensity = 0;
+		var qValue;
 
 		if (angle === 'Rotate Left') {
 			rotationAngle = -90;
@@ -292,6 +294,18 @@
 			pixelDensity = 4.0;
 		} else {
 			pixelDensity = 1.0;
+		}
+
+		if (quality === 'Best') {
+			qValue = 'best';
+		} else if (quality === 'Better') {
+			qValue = 'good';
+		} else if (quality === 'Good') {
+			qValue = 'eco';
+		} else if (quality === 'Average') {
+			qValue = 'low';
+		} else {
+			qValue = 'best';
 		}
 
 		if (Object.keys(pathPoints).length === 8) {
@@ -318,6 +332,9 @@
 				',' +
 				'w_' +
 				Math.round(width) +
+				'/' +
+				'q_auto:' +
+				qValue +
 				'/' +
 				'dpr_' +
 				pixelDensity +
@@ -443,17 +460,25 @@
 			const height = event.data.pluginMessage.height;
 			const oreintation = event.data.pluginMessage.selectedOrientation;
 			const pixelDensity = event.data.pluginMessage.selectedPixelDensity;
+			const quality = event.data.pluginMessage.selectedQuality;
 
 			uploadCloudinaryFile(base64String).then(name => {
-				xhrBinary(fill(coordinates, width, height, name, oreintation, pixelDensity)).then(
-					response => {
-						console.log('RESPONSE', response);
-						parent.postMessage(
-							{ pluginMessage: { type: 'networkResponse', response } },
-							'*'
-						);
-					}
-				);
+				xhrBinary(
+					fill(
+						coordinates,
+						width,
+						height,
+						name,
+						oreintation,
+						pixelDensity,
+						selectedQuality
+					)
+				).then(response => {
+					parent.postMessage(
+						{ pluginMessage: { type: 'networkResponse', response } },
+						'*'
+					);
+				});
 			});
 		}
 	});

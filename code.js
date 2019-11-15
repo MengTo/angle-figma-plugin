@@ -9,18 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 figma.showUI(__html__, { width: 790, height: 475 });
 // figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
-/*
-FIXME BUGS THAT PREVENT IT FROM RUNNING
-1. Is there a shortcut to trigger the modal or do we have to click on the nav bar every time? ✅ opition+cmd+p
-2. The buttons on click they have a blue border, you need to add in the CSS “:focus { outline: none }” ✅
-3. Artboard is none -> infinite loading? Select the first artboard available
-4. Im not sure if it’s my eyes but what happen when the artboard is not the same size as the screen? When I test it, the image is stretch a bit but it might be me
-5. I don’t really see a difference on the 1x, 2x and 3x
-6. Rotation is not fill, it's only fits
-7. auto saving does not work
-8. pixel density not working ✅
-9. roation symmetry
-*/
 // All Variables
 const currentUserSelection = figma.currentPage.selection[0];
 const allFigmaNodes = figma.currentPage.children;
@@ -31,6 +19,17 @@ figma.currentPage.children.map(function (node) {
     nodesNames.push(node.name);
 });
 figma.ui.postMessage({ type: 'allNodeNames', nodeNames: nodesNames });
+/*
+FIXME THINGS THAT NEED FIXING
+Willie
+6. Rotation is not fill, it's only fits
+
+ Meng
+7. auto saving does not work
+9. roation symmetry
+10. rename to "Apply Mockup"
+11. image quality
+*/
 /*
 NOTE Steps For The Angle Fill (Perspective Transform)
 1. Recieve The Selected Node From The User Via The UI and Grab The Unit 8 Array From That
@@ -90,7 +89,6 @@ figma.ui.on('message', uiResponse => {
         if (uiResponse.type === 'convertSelectedArtboard') {
             if (uiResponse.selectedArtboard.length !== 0) {
                 const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
-                console.log('not empty');
                 const coordinates = {};
                 if (currentUserSelection.type === 'VECTOR') {
                     coordinates.topLeftX = currentUserSelection.vectorNetwork.vertices[0].x;
@@ -110,6 +108,7 @@ figma.ui.on('message', uiResponse => {
                             uint8Array: arr,
                             ponits: coordinates,
                             selectedPixelDensity: uiResponse.selectedPixelDensity,
+                            selectedQuality: uiResponse.selectedQuality,
                             width: currentUserSelection.width,
                             height: currentUserSelection.height
                         });

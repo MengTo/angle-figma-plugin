@@ -1,5 +1,3 @@
-import { TIMEOUT } from 'dns';
-
 figma.showUI(__html__, { width: 790, height: 475 });
 
 // figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
@@ -15,6 +13,18 @@ figma.currentPage.children.map(function(node) {
 	nodesNames.push(node.name);
 });
 figma.ui.postMessage({ type: 'allNodeNames', nodeNames: nodesNames });
+
+/*
+FIXME THINGS THAT NEED FIXING 
+Willie
+6. Rotation is not fill, it's only fits
+
+ Meng
+7. auto saving does not work
+9. roation symmetry
+10. rename to "Apply Mockup"
+11. image quality
+*/
 
 /*
 NOTE Steps For The Angle Fill (Perspective Transform)
@@ -78,7 +88,7 @@ figma.ui.on('message', uiResponse => {
 		if (uiResponse.type === 'convertSelectedArtboard') {
 			if (uiResponse.selectedArtboard.length !== 0) {
 				const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
-				console.log('not empty');
+
 				const coordinates = {};
 				if (currentUserSelection.type === 'VECTOR') {
 					coordinates.topLeftX = currentUserSelection.vectorNetwork.vertices[0].x;
@@ -102,6 +112,7 @@ figma.ui.on('message', uiResponse => {
 							uint8Array: arr,
 							ponits: coordinates,
 							selectedPixelDensity: uiResponse.selectedPixelDensity,
+							selectedQuality: uiResponse.selectedQuality,
 							width: currentUserSelection.width,
 							height: currentUserSelection.height
 						});
