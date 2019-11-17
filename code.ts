@@ -1,3 +1,5 @@
+import { format } from 'url';
+
 figma.showUI(__html__, { width: 790, height: 475 });
 
 // figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
@@ -17,13 +19,13 @@ figma.ui.postMessage({ type: 'allNodeNames', nodeNames: nodesNames });
 /*
 FIXME THINGS THAT NEED FIXING 
 Willie
-6. Rotation is not fill, it's only fits
+6. Rotation is not fill, it's only fits ❓
 
  Meng
 7. auto saving does not work
 9. roation symmetry
 10. rename to "Apply Mockup"
-11. image quality
+11. image quality ✅
 */
 
 /*
@@ -66,7 +68,10 @@ async function invertImages(node) {
 // Returns The Byte Of The Node If It Is A Group || Frame
 async function invertNode(node) {
 	// figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
-	const unit8 = await node.exportAsync();
+	const unit8 = await node.exportAsync({
+		format: 'PNG',
+		constraint: { type: 'SCALE', value: 2 }
+	});
 	return unit8;
 }
 

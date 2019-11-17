@@ -22,13 +22,13 @@ figma.ui.postMessage({ type: 'allNodeNames', nodeNames: nodesNames });
 /*
 FIXME THINGS THAT NEED FIXING
 Willie
-6. Rotation is not fill, it's only fits
+6. Rotation is not fill, it's only fits ❓
 
  Meng
 7. auto saving does not work
 9. roation symmetry
 10. rename to "Apply Mockup"
-11. image quality
+11. image quality ✅
 */
 /*
 NOTE Steps For The Angle Fill (Perspective Transform)
@@ -68,7 +68,10 @@ function invertImages(node) {
 function invertNode(node) {
     return __awaiter(this, void 0, void 0, function* () {
         // figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
-        const unit8 = yield node.exportAsync();
+        const unit8 = yield node.exportAsync({
+            format: 'PNG',
+            constraint: { type: 'SCALE', value: 2 }
+        });
         return unit8;
     });
 }

@@ -269,7 +269,6 @@
 
 	function fill(pathPoints, width, height, imageName, angle, pixel, quality) {
 		// https://res.cloudinary.com/daqbtlcya/image/upload/c_fit,e_distort:0:238:347:0:1094:579:749:871,h_871,w_1094/v1573028294/34448089.jpg
-		console.log(quality);
 		var rotationAngle = 0;
 		var coordinates = {};
 		var pixelDensity = 0;
@@ -310,7 +309,7 @@
 
 		if (Object.keys(pathPoints).length === 8) {
 			const url =
-				'https://res.cloudinary.com/daqbtlcya/image/upload/c_fit,e_distort:' +
+				'https://res.cloudinary.com/daqbtlcya/image/upload/dpr_3.0,e_distort:' +
 				pathPoints.topLeftX +
 				':' +
 				pathPoints.topLeftY +
@@ -333,19 +332,13 @@
 				'w_' +
 				Math.round(width) +
 				'/' +
-				'q_auto:' +
-				qValue +
-				'/' +
-				'dpr_' +
-				pixelDensity +
-				'/' +
 				'e_trim' +
 				'/' +
 				'a_' +
 				rotationAngle +
 				'/' +
 				imageName +
-				'.jpg';
+				'.png';
 			return url;
 		} else {
 			parent.postMessage({
