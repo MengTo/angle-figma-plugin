@@ -389,23 +389,26 @@
 			// 	'.png';
 			const url =
 				`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
-				pathPoints.topLeftX +
+				pathPoints.topLeftX * 3 +
 				':' +
-				pathPoints.topLeftY +
+				pathPoints.topLeftY * 3 +
 				':' +
-				pathPoints.topRightX +
+				pathPoints.topRightX * 3 +
 				':' +
-				pathPoints.topRightY +
+				pathPoints.topRightY * 3 +
 				':' +
-				pathPoints.bottomLeftX +
+				pathPoints.bottomLeftX * 3 +
 				':' +
-				pathPoints.bottomLeftY +
+				pathPoints.bottomLeftY * 3 +
 				':' +
-				pathPoints.bottomRightX +
+				pathPoints.bottomRightX * 3 +
 				':' +
-				pathPoints.bottomRightY +
+				pathPoints.bottomRightY * 3 +
 				'/' +
 				'e_trim' +
+				'/' +
+				'a_' +
+				rotationAngle +
 				'/' +
 				imageName +
 				'.png';

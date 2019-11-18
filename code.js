@@ -72,7 +72,7 @@ function invertNode(node) {
         // figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
         const unit8 = yield node.exportAsync({
             format: 'PNG',
-            constraint: { type: 'SCALE', value: 2 }
+            constraint: { type: 'SCALE', value: 8 }
         });
         return unit8;
     });
@@ -107,17 +107,17 @@ figma.ui.on('message', uiResponse => {
                     // // BOTTOM RIGHT
                     coordinates.bottomRightX = currentUserSelection.vectorNetwork.vertices[3].x;
                     coordinates.bottomRightY = currentUserSelection.vectorNetwork.vertices[3].y;
-                    invertImages(selectedNode).then(arr => {
-                        figma.ui.postMessage({
-                            type: 'networkRequest',
-                            uint8Array: arr,
-                            ponits: coordinates,
-                            selectedPixelDensity: uiResponse.selectedPixelDensity,
-                            selectedQuality: uiResponse.selectedQuality,
-                            width: currentUserSelection.width,
-                            height: currentUserSelection.height
-                        });
-                    });
+                    // invertImages(selectedNode).then(arr => {
+                    // 	figma.ui.postMessage({
+                    // 		type: 'networkRequest',
+                    // 		uint8Array: arr,
+                    // 		ponits: coordinates,
+                    // 		selectedPixelDensity: uiResponse.selectedPixelDensity,
+                    // 		selectedQuality: uiResponse.selectedQuality,
+                    // 		width: currentUserSelection.width,
+                    // 		height: currentUserSelection.height
+                    // 	});
+                    // });
                 }
                 if (currentUserSelection.type === 'RECTANGLE') {
                     figma.notify(`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`);

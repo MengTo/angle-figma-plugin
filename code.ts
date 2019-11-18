@@ -70,7 +70,7 @@ async function invertNode(node) {
 	// figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
 	const unit8 = await node.exportAsync({
 		format: 'PNG',
-		constraint: { type: 'SCALE', value: 2 }
+		constraint: { type: 'SCALE', value: 8 }
 	});
 	return unit8;
 }
@@ -111,17 +111,17 @@ figma.ui.on('message', uiResponse => {
 					coordinates.bottomRightX = currentUserSelection.vectorNetwork.vertices[3].x;
 					coordinates.bottomRightY = currentUserSelection.vectorNetwork.vertices[3].y;
 
-					invertImages(selectedNode).then(arr => {
-						figma.ui.postMessage({
-							type: 'networkRequest',
-							uint8Array: arr,
-							ponits: coordinates,
-							selectedPixelDensity: uiResponse.selectedPixelDensity,
-							selectedQuality: uiResponse.selectedQuality,
-							width: currentUserSelection.width,
-							height: currentUserSelection.height
-						});
-					});
+					// invertImages(selectedNode).then(arr => {
+					// 	figma.ui.postMessage({
+					// 		type: 'networkRequest',
+					// 		uint8Array: arr,
+					// 		ponits: coordinates,
+					// 		selectedPixelDensity: uiResponse.selectedPixelDensity,
+					// 		selectedQuality: uiResponse.selectedQuality,
+					// 		width: currentUserSelection.width,
+					// 		height: currentUserSelection.height
+					// 	});
+					// });
 				}
 
 				if (currentUserSelection.type === 'RECTANGLE') {
