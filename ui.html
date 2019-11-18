@@ -360,8 +360,33 @@
 		}
 
 		if (Object.keys(pathPoints).length === 8) {
+			// const url =
+			// 	'https://res.cloudinary.com/daqbtlcya/image/upload/e_improve,e_distort:' +
+			// 	pathPoints.topLeftX +
+			// 	':' +
+			// 	pathPoints.topLeftY +
+			// 	':' +
+			// 	pathPoints.topRightX +
+			// 	':' +
+			// 	pathPoints.topRightY +
+			// 	':' +
+			// 	pathPoints.bottomLeftX +
+			// 	':' +
+			// 	pathPoints.bottomLeftY +
+			// 	':' +
+			// 	pathPoints.bottomRightX +
+			// 	':' +
+			// 	pathPoints.bottomRightY +
+			// 	'/' +
+			// 	'e_trim' +
+			// 	'/' +
+			// 	'a_' +
+			// 	rotationAngle +
+			// 	'/' +
+			// 	imageName +
+			// 	'.png';
 			const url =
-				'https://res.cloudinary.com/daqbtlcya/image/upload/e_improve,e_distort:' +
+				'https://res.cloudinary.com/daqbtlcya/image/upload/e_distort:' +
 				pathPoints.topLeftX +
 				':' +
 				pathPoints.topLeftY +
@@ -377,17 +402,8 @@
 				pathPoints.bottomRightX +
 				':' +
 				pathPoints.bottomRightY +
-				',' +
-				'h_' +
-				Math.round(height) +
-				',' +
-				'w_' +
-				Math.round(width) +
 				'/' +
 				'e_trim' +
-				'/' +
-				'a_' +
-				rotationAngle +
 				'/' +
 				imageName +
 				'.png';

@@ -1,6 +1,6 @@
-import { format } from 'url';
-
-figma.showUI(__html__, { width: 790, height: 475 });
+if (figma.command === 'applyMockup') {
+	figma.showUI(__html__, { width: 790, height: 475 });
+}
 
 // figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
 
