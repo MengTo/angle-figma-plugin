@@ -121,10 +121,10 @@
 						class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
 						id="pixel-density-select"
 					>
-						<option>1x</option>
-						<option>2x</option>
 						<option>3x</option>
 						<option>4x</option>
+						<option>1x</option>
+						<option>2x</option>
 					</select>
 					<div
 						class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -299,8 +299,8 @@
 	}
 
 	async function uploadCloudinaryFile(file) {
-		const url = 'https://api.cloudinary.com/v1_1/daqbtlcya/image/upload';
-		const preset = 'jmxqfu7f';
+		const url = 'https://api.cloudinary.com/v1_1/design-code/image/upload';
+		const preset = 'anglify';
 		const imageName = Math.floor(Math.random() * Math.floor(100000000));
 
 		const result = await fetch(url, {
@@ -337,14 +337,16 @@
 			coordinates = pathPoints;
 		}
 
-		if (pixel === '2x') {
-			pixelDensity = 2.0;
-		} else if (pixel === '3x') {
+		if (pixel === '3x') {
 			pixelDensity = 3.0;
 		} else if (pixel === '4x') {
 			pixelDensity = 4.0;
-		} else {
+		} else if (pixel === '1x') {
 			pixelDensity = 1.0;
+		} else if (pixel === '2x') {
+			pixelDensity = 2.0;
+		} else {
+			pixelDensity = 3.0;
 		}
 
 		if (quality === 'Best') {
@@ -386,7 +388,7 @@
 			// 	imageName +
 			// 	'.png';
 			const url =
-				'https://res.cloudinary.com/daqbtlcya/image/upload/e_distort:' +
+				`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
 				pathPoints.topLeftX +
 				':' +
 				pathPoints.topLeftY +
@@ -407,7 +409,9 @@
 				'/' +
 				imageName +
 				'.png';
+
 			// const url = 'https://res.cloudinary.com/daqbtlcya/image/upload/' + imageName + '.png';
+			console.log(url);
 			return url;
 		} else {
 			parent.postMessage({
