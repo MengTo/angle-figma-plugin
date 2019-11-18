@@ -28,7 +28,7 @@ Willie
 7. auto saving does not work
 9. roation symmetry
 10. rename to "Apply Mockup"
-11. image quality ✅
+11. image quality
 */
 /*
 NOTE Steps For The Angle Fill (Perspective Transform)
@@ -137,15 +137,16 @@ figma.ui.on('message', uiResponse => {
                             height: currentUserSelection.height
                         });
                     });
-                    // base image if the selected artboard is a frame or group
-                    for (const selectedNode of figma.currentPage.selection) {
-                        const fills = clone(selectedNode.fills || []);
+                    if (figma.currentPage.selection[0].fills) {
+                        const fills = Array.from(figma.currentPage.selection[0].fills);
                         fills.push({
                             type: 'IMAGE',
-                            scaleMode: 'FIT',
-                            imageHash: figma.createImage(new Uint8Array()).hash
+                            visible: true,
+                            opacity: 1,
+                            scaleMode: 'FILL',
+                            imageHash: 'efe98099a0aa97c1aa64e286bc82e633cc9aed22'
                         });
-                        currentUserSelection.fills = fills;
+                        figma.currentPage.selection[0].fills = fills;
                     }
                 }
                 // base image if the selected artboard is an image
@@ -162,8 +163,14 @@ figma.ui.on('message', uiResponse => {
         else if (uiResponse.type === 'networkResponse') {
             const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
             const selectedImage = angleFill(uiResponse.response, currentUserSelection);
-            cloneOfScreen[0] = selectedImage[0];
-            figma.currentPage.selection[0].fills = cloneOfScreen;
+            if (cloneOfScreen.length > 1) {
+                console.log(true);
+                const c = cloneOfScreen.slice(1);
+                c[0] = selectedImage[0];
+                figma.currentPage.selection[0].fills = c;
+            }
+            // cloneOfScreen[0].imageHash = selectedImage[0].imageHash;
+            // figma.currentPage.selection[0].fills = cloneOfScreen;
             figma.closePlugin();
         }
         else if (uiResponse.type === 'cancel-modal') {
