@@ -387,6 +387,60 @@
 			// 	'/' +
 			// 	imageName +
 			// 	'.png';
+			// const url =
+			// 	`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
+			// 	pathPoints.topLeftX +
+			// 	':' +
+			// 	pathPoints.topLeftY +
+			// 	':' +
+			// 	pathPoints.topRightX +
+			// 	':' +
+			// 	pathPoints.topRightY +
+			// 	':' +
+			// 	pathPoints.bottomLeftX +
+			// 	':' +
+			// 	pathPoints.bottomLeftY +
+			// 	':' +
+			// 	pathPoints.bottomRightX +
+			// 	':' +
+			// 	pathPoints.bottomRightY +
+			// 	'/' +
+			// 	'e_trim' +
+			// 	'/' +
+			// 	'a_' +
+			// 	rotationAngle +
+			// 	'/' +
+			// 	imageName +
+			// 	'.png';
+
+			console.log(pathPoints);
+
+			// const url =
+			// 	`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
+			// 	pathPoints.topLeftX * 3 +
+			// 	':' +
+			// 	pathPoints.topLeftY * 3 +
+			// 	':' +
+			// 	pathPoints.topRightX * 3 +
+			// 	':' +
+			// 	pathPoints.topRightY * 3 +
+			// 	':' +
+			// 	pathPoints.bottomLeftX * 3 +
+			// 	':' +
+			// 	pathPoints.bottomLeftY * 3 +
+			// 	':' +
+			// 	pathPoints.bottomRightX * 3 +
+			// 	':' +
+			// 	pathPoints.bottomRightY * 3 +
+			// 	'/' +
+			// 	'e_trim' +
+			// 	'/' +
+			// 	'a_' +
+			// 	rotationAngle +
+			// 	'/' +
+			// 	imageName +
+			// 	'.png';
+
 			const url =
 				`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
 				pathPoints.topLeftX * 3 +
@@ -413,8 +467,6 @@
 				imageName +
 				'.png';
 
-			// const url = 'https://res.cloudinary.com/daqbtlcya/image/upload/' + imageName + '.png';
-			console.log(url);
 			return url;
 		} else {
 			parent.postMessage({

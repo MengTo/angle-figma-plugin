@@ -17,18 +17,6 @@ figma.currentPage.children.map(function(node) {
 figma.ui.postMessage({ type: 'allNodeNames', nodeNames: nodesNames });
 
 /*
-FIXME THINGS THAT NEED FIXING 
-Willie
-6. Rotation is not fill, it's only fits ❓
-
- Meng
-7. auto saving does not work
-9. roation symmetry
-10. rename to "Apply Mockup"
-11. image quality 
-*/
-
-/*
 NOTE Steps For The Angle Fill (Perspective Transform)
 1. Recieve The Selected Node From The User Via The UI and Grab The Unit 8 Array From That 
 2. Convert The Unit 8 Array Into a Base64 String 
@@ -70,7 +58,7 @@ async function invertNode(node) {
 	// figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
 	const unit8 = await node.exportAsync({
 		format: 'PNG',
-		constraint: { type: 'SCALE', value: 8 }
+		constraint: { type: 'SCALE', value: 4 }
 	});
 	return unit8;
 }
@@ -111,17 +99,17 @@ figma.ui.on('message', uiResponse => {
 					coordinates.bottomRightX = currentUserSelection.vectorNetwork.vertices[3].x;
 					coordinates.bottomRightY = currentUserSelection.vectorNetwork.vertices[3].y;
 
-					// invertImages(selectedNode).then(arr => {
-					// 	figma.ui.postMessage({
-					// 		type: 'networkRequest',
-					// 		uint8Array: arr,
-					// 		ponits: coordinates,
-					// 		selectedPixelDensity: uiResponse.selectedPixelDensity,
-					// 		selectedQuality: uiResponse.selectedQuality,
-					// 		width: currentUserSelection.width,
-					// 		height: currentUserSelection.height
-					// 	});
-					// });
+					invertImages(selectedNode).then(arr => {
+						figma.ui.postMessage({
+							type: 'networkRequest',
+							uint8Array: arr,
+							ponits: coordinates,
+							selectedPixelDensity: uiResponse.selectedPixelDensity,
+							selectedQuality: uiResponse.selectedQuality,
+							width: currentUserSelection.width,
+							height: currentUserSelection.height
+						});
+					});
 				}
 
 				if (currentUserSelection.type === 'RECTANGLE') {
@@ -176,7 +164,6 @@ figma.ui.on('message', uiResponse => {
 			const selectedImage = angleFill(uiResponse.response, currentUserSelection);
 
 			if (cloneOfScreen.length > 1) {
-				console.log(true);
 				const c = cloneOfScreen.slice(1);
 				c[0] = selectedImage[0];
 				figma.currentPage.selection[0].fills = c;
