@@ -9,6 +9,7 @@ const allFigmaNodes = figma.currentPage.children;
 let nodesNames = [];
 figma.currentPage.children.map(function(node) {
 	nodesNames.push(node.name);
+	nodesNames.reverse();
 });
 figma.ui.postMessage({ type: 'allNodeNames', nodeNames: nodesNames });
 
