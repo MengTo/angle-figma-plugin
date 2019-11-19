@@ -10,11 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 if (figma.command === 'applyMockup') {
     figma.showUI(__html__, { width: 790, height: 475 });
 }
-// figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
-// All Variables
 const currentUserSelection = figma.currentPage.selection[0];
 const allFigmaNodes = figma.currentPage.children;
-const testerNode = allFigmaNodes[2];
 // NOTE Loop Over All The Node Names And Send It To The UI
 let nodesNames = [];
 figma.currentPage.children.map(function (node) {
@@ -61,7 +58,7 @@ function invertNode(node) {
         // figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
         const unit8 = yield node.exportAsync({
             format: 'PNG',
-            constraint: { type: 'SCALE', value: 4 }
+            constraint: { type: 'SCALE', value: 3 }
         });
         return unit8;
     });
@@ -167,6 +164,9 @@ figma.ui.on('message', uiResponse => {
             figma.closePlugin();
         }
         else if (uiResponse.type === 'netWorkError') {
+            figma.notify(uiResponse.message);
+        }
+        else if (uiResponse.type === 'cloudinaryError') {
             figma.notify(uiResponse.message);
         }
     }

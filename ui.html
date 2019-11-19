@@ -232,20 +232,6 @@
 <script src="/cloudinary-core/cloudinary-core.js" type="text/javascript"></script>
 
 <script>
-	// function Uint8ToBase64(u8Arr) {
-	// 	var CHUNK_SIZE = 0x8000; //arbitrary number
-	// 	var index = 0;
-	// 	var length = u8Arr.length;
-	// 	var result = '';
-	// 	var slice;
-	// 	while (index < length) {
-	// 		slice = u8Arr.subarray(index, Math.min(index + CHUNK_SIZE, length));
-	// 		result += String.fromCharCode.apply(null, slice);
-	// 		index += CHUNK_SIZE;
-	// 	}
-	// 	return btoa(result);
-	// }
-
 	function Uint8ToBase64(arrayBuffer) {
 		let base64 = '';
 		let encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
@@ -299,8 +285,8 @@
 	}
 
 	async function uploadCloudinaryFile(file) {
-		const url = 'https://api.cloudinary.com/v1_1/design-code/image/upload';
-		const preset = 'anglify';
+		const url = 'https://api.cloudinary.com/v1_1/daqbtlcya/image/upload';
+		const preset = 'jmxqfu7f';
 		const imageName = Math.floor(Math.random() * Math.floor(100000000));
 
 		const result = await fetch(url, {
@@ -315,7 +301,7 @@
 				public_id: '' + imageName
 			})
 		});
-		console.log(result);
+
 		return imageName;
 	}
 
@@ -362,87 +348,8 @@
 		}
 
 		if (Object.keys(pathPoints).length === 8) {
-			// const url =
-			// 	'https://res.cloudinary.com/daqbtlcya/image/upload/e_improve,e_distort:' +
-			// 	pathPoints.topLeftX +
-			// 	':' +
-			// 	pathPoints.topLeftY +
-			// 	':' +
-			// 	pathPoints.topRightX +
-			// 	':' +
-			// 	pathPoints.topRightY +
-			// 	':' +
-			// 	pathPoints.bottomLeftX +
-			// 	':' +
-			// 	pathPoints.bottomLeftY +
-			// 	':' +
-			// 	pathPoints.bottomRightX +
-			// 	':' +
-			// 	pathPoints.bottomRightY +
-			// 	'/' +
-			// 	'e_trim' +
-			// 	'/' +
-			// 	'a_' +
-			// 	rotationAngle +
-			// 	'/' +
-			// 	imageName +
-			// 	'.png';
-			// const url =
-			// 	`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
-			// 	pathPoints.topLeftX +
-			// 	':' +
-			// 	pathPoints.topLeftY +
-			// 	':' +
-			// 	pathPoints.topRightX +
-			// 	':' +
-			// 	pathPoints.topRightY +
-			// 	':' +
-			// 	pathPoints.bottomLeftX +
-			// 	':' +
-			// 	pathPoints.bottomLeftY +
-			// 	':' +
-			// 	pathPoints.bottomRightX +
-			// 	':' +
-			// 	pathPoints.bottomRightY +
-			// 	'/' +
-			// 	'e_trim' +
-			// 	'/' +
-			// 	'a_' +
-			// 	rotationAngle +
-			// 	'/' +
-			// 	imageName +
-			// 	'.png';
-
-			console.log(pathPoints);
-
-			// const url =
-			// 	`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
-			// 	pathPoints.topLeftX * 3 +
-			// 	':' +
-			// 	pathPoints.topLeftY * 3 +
-			// 	':' +
-			// 	pathPoints.topRightX * 3 +
-			// 	':' +
-			// 	pathPoints.topRightY * 3 +
-			// 	':' +
-			// 	pathPoints.bottomLeftX * 3 +
-			// 	':' +
-			// 	pathPoints.bottomLeftY * 3 +
-			// 	':' +
-			// 	pathPoints.bottomRightX * 3 +
-			// 	':' +
-			// 	pathPoints.bottomRightY * 3 +
-			// 	'/' +
-			// 	'e_trim' +
-			// 	'/' +
-			// 	'a_' +
-			// 	rotationAngle +
-			// 	'/' +
-			// 	imageName +
-			// 	'.png';
-
 			const url =
-				`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
+				`https://res.cloudinary.com/daqbtlcya/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
 				pathPoints.topLeftX * 3 +
 				':' +
 				pathPoints.topLeftY * 3 +
@@ -458,6 +365,11 @@
 				pathPoints.bottomRightX * 3 +
 				':' +
 				pathPoints.bottomRightY * 3 +
+				'w_' +
+				Math.round(width) +
+				',' +
+				'h_' +
+				Math.round(height) +
 				'/' +
 				'e_trim' +
 				'/' +
@@ -467,6 +379,7 @@
 				imageName +
 				'.png';
 
+			console.log('URL', url);
 			return url;
 		} else {
 			parent.postMessage({
@@ -492,6 +405,16 @@
 					}
 				} else {
 					reject(`Request had an error: ${req.status}`);
+					parent.postMessage(
+						{
+							pluginMessage: {
+								type: 'cloudinaryError',
+								message:
+									'The selected artboard exceeds 25 megapixels. Try downgrading the width/height.'
+							}
+						},
+						'*'
+					);
 				}
 			};
 			req.onerror = reject;
