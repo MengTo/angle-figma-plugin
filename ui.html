@@ -1,520 +1,543 @@
 <head>
-	<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
-	<style>
-		#create {
-			background-color: #3c11ee;
-		}
-		#create:focus {
-			outline: none;
-		}
-		#cancel {
-			background-color: #b6c4ff;
-		}
-		#cancel:focus {
-			outline: none;
-		}
-		#version {
-			color: #999999;
-		}
-		#version-two {
-			margin-top: -24px;
-			color: #999999;
-		}
+  <link
+    href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    #create {
+      background-color: #3c11ee;
+    }
+    #create:focus {
+      outline: none;
+    }
+    #cancel {
+      background-color: #b6c4ff;
+    }
+    #cancel:focus {
+      outline: none;
+    }
+    #version {
+      color: #999999;
+    }
+    #version-two {
+      margin-top: -24px;
+      color: #999999;
+    }
 
-		.circle {
-			width: 20px;
-			height: 20px;
-			border-radius: 20px;
-			margin: 0px 5px;
-			animation: wave 1.5s ease-in-out infinite;
-		}
-		.circle-1 {
-			animation-delay: 0ms;
-		}
-		.circle-2 {
-			animation-delay: 200ms;
-		}
-		.circle-3 {
-			animation-delay: 400ms;
-		}
-		@keyframes wave {
-			30% {
-				background-color: #3c11ee;
-			}
-			0%,
-			60%,
-			100% {
-				background-color: #b6c4ff;
-			}
-		}
-	</style>
+    .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+      margin: 0px 5px;
+      animation: wave 1.5s ease-in-out infinite;
+    }
+    .circle-1 {
+      animation-delay: 0ms;
+    }
+    .circle-2 {
+      animation-delay: 200ms;
+    }
+    .circle-3 {
+      animation-delay: 400ms;
+    }
+    @keyframes wave {
+      30% {
+        background-color: #3c11ee;
+      }
+      0%,
+      60%,
+      100% {
+        background-color: #b6c4ff;
+      }
+    }
+  </style>
 </head>
 <html>
-	<div class="container mx-auto p-16">
-		<div class="flex justify-center">
-			<svg
-				width="40"
-				height="40"
-				viewBox="0 0 40 40"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path
-					d="M27.8454 29.0462H36.9975L24.6621 7.73535L20.1524 15.1876L23.6194 21.4245L27.8454 29.0462Z"
-					fill="#3C10EE"
-				/>
-				<path
-					d="M3.78524 39.0637L0.252649 33.0068C-0.082734 32.4318 -0.0843078 31.7243 0.248513 31.1477L9.54418 15.0466L17.4573 0.962321C18.1784 -0.321219 20.0475 -0.320658 20.7678 0.963311L24.1605 7.01049C24.4908 7.59916 24.4752 8.31784 24.1196 8.89202L21.2482 13.5284L7.08473 39.0297C6.37472 40.308 4.52214 40.3272 3.78524 39.0637Z"
-					fill="#B6C4FF"
-				/>
-				<path
-					d="M29.862 29.0462H36.9582L39.7517 33.9204C40.4658 35.1666 39.5544 36.7106 38.1044 36.7106H18.056C16.6159 36.7106 15.7034 35.1853 16.3981 33.9395L18.5871 30.0138C18.92 29.4169 19.5552 29.0462 20.2451 29.0462H29.862Z"
-					fill="#2CA4FE"
-				/>
-			</svg>
-		</div>
+  <div class="container mx-auto p-16">
+    <div class="flex justify-center">
+      <svg
+        width="40"
+        height="40"
+        viewBox="0 0 40 40"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M27.8454 29.0462H36.9975L24.6621 7.73535L20.1524 15.1876L23.6194 21.4245L27.8454 29.0462Z"
+          fill="#3C10EE"
+        />
+        <path
+          d="M3.78524 39.0637L0.252649 33.0068C-0.082734 32.4318 -0.0843078 31.7243 0.248513 31.1477L9.54418 15.0466L17.4573 0.962321C18.1784 -0.321219 20.0475 -0.320658 20.7678 0.963311L24.1605 7.01049C24.4908 7.59916 24.4752 8.31784 24.1196 8.89202L21.2482 13.5284L7.08473 39.0297C6.37472 40.308 4.52214 40.3272 3.78524 39.0637Z"
+          fill="#B6C4FF"
+        />
+        <path
+          d="M29.862 29.0462H36.9582L39.7517 33.9204C40.4658 35.1666 39.5544 36.7106 38.1044 36.7106H18.056C16.6159 36.7106 15.7034 35.1853 16.3981 33.9395L18.5871 30.0138C18.92 29.4169 19.5552 29.0462 20.2451 29.0462H29.862Z"
+          fill="#2CA4FE"
+        />
+      </svg>
+    </div>
 
-		<div class="flex justify-center">
-			<h1 class="text-3xl font-bold">Apply to Mockup</h1>
-		</div>
+    <div class="flex justify-center">
+      <h1 class="text-3xl font-bold">Apply to Mockup</h1>
+    </div>
 
-		<div class="flex justify-center">
-			<p class="text-base text-gray-500 tracking-wide pt-2">
-				Choose a Frame to apply onto your selected shape
-			</p>
-		</div>
+    <div class="flex justify-center">
+      <p class="text-base text-gray-500 tracking-wide pt-2">
+        Choose a Frame to apply onto your selected shape
+      </p>
+    </div>
 
-		<div class="flex justify-center mt-5 ml-8">
-			<div class="mr-8">
-				<p class="text-base text-gray-500 tracking-wide pt-2">Artboard</p>
+    <div class="flex justify-center mt-5 ml-8">
+      <div class="mr-8">
+        <p class="text-base text-gray-500 tracking-wide pt-2">Artboard</p>
 
-				<div class="inline-block relative w-32">
-					<select
-						class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-						id="artboard-select"
-					>
-					</select>
-					<div
-						class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-					>
-						<svg
-							class="fill-current h-4 w-4"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-						>
-							<path
-								d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-							/>
-						</svg>
-					</div>
-				</div>
-			</div>
+        <div class="inline-block relative w-32">
+          <select
+            class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+            id="artboard-select"
+          >
+          </select>
+          <div
+            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+          >
+            <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
 
-			<div class="mr-8">
-				<p class="text-base text-gray-500 tracking-wide pt-2">Pixel Density</p>
+      <div class="mr-8">
+        <p class="text-base text-gray-500 tracking-wide pt-2">Pixel Density</p>
 
-				<div class="inline-block relative w-50">
-					<select
-						class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-						id="pixel-density-select"
-					>
-						<option>3x</option>
-						<option>4x</option>
-						<option>1x</option>
-						<option>2x</option>
-					</select>
-					<div
-						class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-					>
-						<svg
-							class="fill-current h-4 w-4"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-						>
-							<path
-								d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-							/>
-						</svg>
-					</div>
-				</div>
-			</div>
+        <div class="inline-block relative w-50">
+          <select
+            class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+            id="pixel-density-select"
+          >
+            <option>1x</option>
+            <option selected>2x</option>
+            <option>3x</option>
+            <option>4x</option>
+          </select>
+          <div
+            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+          >
+            <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
 
-			<div class="mr-8">
-				<p class="text-base text-gray-500 tracking-wide pt-2">Quality</p>
+      <div class="mr-8">
+        <p class="text-base text-gray-500 tracking-wide pt-2">Quality</p>
 
-				<div class="inline-block relative w-50">
-					<select
-						class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-						id="quality-select"
-					>
-						<option>Best</option>
-						<option>Better</option>
-						<option>Good</option>
-						<option>Average</option>
-					</select>
-					<div
-						class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-					>
-						<svg
-							class="fill-current h-4 w-4"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-						>
-							<path
-								d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-							/>
-						</svg>
-					</div>
-				</div>
-			</div>
+        <div class="inline-block relative w-50">
+          <select
+            class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+            id="quality-select"
+          >
+            <option>Best</option>
+            <option>Better</option>
+            <option>Good</option>
+            <option>Average</option>
+          </select>
+          <div
+            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+          >
+            <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
 
-			<div class="mr-8">
-				<p class="text-base text-gray-500 tracking-wide pt-2">Orientation</p>
+      <div class="mr-8">
+        <p class="text-base text-gray-500 tracking-wide pt-2">Orientation</p>
 
-				<div class="inline-block relative w-50">
-					<select
-						class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-						id="orientation-select"
-					>
-						<option defaultValue="" disabled selected>
-							Default
-						</option>
-						<option>Rotate Left</option>
-						<option>Rotate Right</option>
-						<option>Flip</option>
-					</select>
-					<div
-						class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-					>
-						<svg
-							class="fill-current h-4 w-4"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-						>
-							<path
-								d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-							/>
-						</svg>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="inline-block relative w-50">
+          <select
+            class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+            id="orientation-select"
+          >
+            <option defaultValue="" disabled selected>
+              Default
+            </option>
+            <option>Rotate Left</option>
+            <option>Rotate Right</option>
+            <option>Flip</option>
+          </select>
+          <div
+            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+          >
+            <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
 
-		<div id="loading" class="flex justify-center mt-10 invisible">
-			<div class="circle circle-1"></div>
-			<div class="circle circle-2"></div>
-			<div class="circle circle-3"></div>
-		</div>
+    <div id="loading" class="flex justify-center mt-10 invisible">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+      <div class="circle circle-3"></div>
+    </div>
 
-		<div class="flex justify-end mt-10 mr-8">
-			<button id="cancel" class="text-black py-2 px-4 rounded-lg mr-5" onclick="cancel()">
-				Cancel
-			</button>
-			<button id="create" onclick="create()" class="text-white py-2 px-4 rounded-lg">
-				Apply Mockup
-			</button>
-		</div>
-	</div>
-	<hr />
-	<div class="flex justify-start">
-		<p id="version" class="tracking-wide mt-4 ml-4">Version 1.0</p>
-	</div>
+    <div class="flex justify-end mt-10 mr-8">
+      <button
+        id="cancel"
+        class="text-black py-2 px-4 rounded-lg mr-5"
+        onclick="cancel()"
+      >
+        Cancel
+      </button>
+      <button
+        id="create"
+        onclick="create()"
+        class="text-white py-2 px-4 rounded-lg"
+      >
+        Apply Mockup
+      </button>
+    </div>
+  </div>
+  <hr />
+  <div class="flex justify-start">
+    <p id="version" class="tracking-wide mt-4 ml-4">Version 1.0</p>
+  </div>
 
-	<div class="flex justify-end">
-		<p id="version-two" class="tracking-wide mr-4">Version 1.0</p>
-	</div>
+  <div class="flex justify-end">
+    <p id="version-two" class="tracking-wide mr-4">Version 1.0</p>
+  </div>
 </html>
 
 <script src="/lodash/lodash.js" type="text/javascript"></script>
-<script src="/cloudinary-core/cloudinary-core.js" type="text/javascript"></script>
+<script
+  src="/cloudinary-core/cloudinary-core.js"
+  type="text/javascript"
+></script>
 
 <script>
-	function Uint8ToBase64(arrayBuffer) {
-		let base64 = '';
-		let encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  function Uint8ToBase64(arrayBuffer) {
+    let base64 = "";
+    let encodings =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-		let bytes = new Uint8Array(arrayBuffer);
-		let byteLength = bytes.byteLength;
-		let byteRemainder = byteLength % 3;
-		let mainLength = byteLength - byteRemainder;
+    let bytes = new Uint8Array(arrayBuffer);
+    let byteLength = bytes.byteLength;
+    let byteRemainder = byteLength % 3;
+    let mainLength = byteLength - byteRemainder;
 
-		let a, b, c, d;
-		let chunk;
+    let a, b, c, d;
+    let chunk;
 
-		// Main loop deals with bytes in chunks of 3
-		for (let i = 0; i < mainLength; i = i + 3) {
-			// Combine the three bytes into a single integer
-			chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2];
+    // Main loop deals with bytes in chunks of 3
+    for (let i = 0; i < mainLength; i = i + 3) {
+      // Combine the three bytes into a single integer
+      chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2];
 
-			// Use bitmasks to extract 6-bit segments from the triplet
-			a = (chunk & 16515072) >> 18; // 16515072 = (2^6 - 1) << 18
-			b = (chunk & 258048) >> 12; // 258048   = (2^6 - 1) << 12
-			c = (chunk & 4032) >> 6; // 4032     = (2^6 - 1) << 6
-			d = chunk & 63; // 63       = 2^6 - 1
+      // Use bitmasks to extract 6-bit segments from the triplet
+      a = (chunk & 16515072) >> 18; // 16515072 = (2^6 - 1) << 18
+      b = (chunk & 258048) >> 12; // 258048   = (2^6 - 1) << 12
+      c = (chunk & 4032) >> 6; // 4032     = (2^6 - 1) << 6
+      d = chunk & 63; // 63       = 2^6 - 1
 
-			// Convert the raw binary segments to the appropriate ASCII encoding
-			base64 += encodings[a] + encodings[b] + encodings[c] + encodings[d];
-		}
+      // Convert the raw binary segments to the appropriate ASCII encoding
+      base64 += encodings[a] + encodings[b] + encodings[c] + encodings[d];
+    }
 
-		// Deal with the remaining bytes and padding
-		if (byteRemainder == 1) {
-			chunk = bytes[mainLength];
+    // Deal with the remaining bytes and padding
+    if (byteRemainder == 1) {
+      chunk = bytes[mainLength];
 
-			a = (chunk & 252) >> 2; // 252 = (2^6 - 1) << 2
+      a = (chunk & 252) >> 2; // 252 = (2^6 - 1) << 2
 
-			// Set the 4 least significant bits to zero
-			b = (chunk & 3) << 4; // 3   = 2^2 - 1
+      // Set the 4 least significant bits to zero
+      b = (chunk & 3) << 4; // 3   = 2^2 - 1
 
-			base64 += encodings[a] + encodings[b] + '==';
-		} else if (byteRemainder == 2) {
-			chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1];
+      base64 += encodings[a] + encodings[b] + "==";
+    } else if (byteRemainder == 2) {
+      chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1];
 
-			a = (chunk & 64512) >> 10; // 64512 = (2^6 - 1) << 10
-			b = (chunk & 1008) >> 4; // 1008  = (2^6 - 1) << 4
+      a = (chunk & 64512) >> 10; // 64512 = (2^6 - 1) << 10
+      b = (chunk & 1008) >> 4; // 1008  = (2^6 - 1) << 4
 
-			// Set the 2 least significant bits to zero
-			c = (chunk & 15) << 2; // 15    = 2^4 - 1
+      // Set the 2 least significant bits to zero
+      c = (chunk & 15) << 2; // 15    = 2^4 - 1
 
-			base64 += encodings[a] + encodings[b] + encodings[c] + '=';
-		}
+      base64 += encodings[a] + encodings[b] + encodings[c] + "=";
+    }
 
-		return base64;
-	}
+    return base64;
+  }
 
-	async function uploadCloudinaryFile(file) {
-		const url = 'https://api.cloudinary.com/v1_1/design-code/image/upload';
-		const preset = 'anglify';
-		const imageName = Math.floor(Math.random() * Math.floor(100000000));
+  async function uploadCloudinaryFile(file) {
+    const url = "https://api.cloudinary.com/v1_1/design-code/image/upload";
+    const preset = "anglify";
+    const imageName = Math.floor(Math.random() * Math.floor(100000000));
 
-		const result = await fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json; charset=utf-8',
-				'X-Requested-With': 'XMLHttpRequest'
-			},
-			body: JSON.stringify({
-				upload_preset: preset,
-				file: 'data:image/png;base64,' + file,
-				public_id: '' + imageName
-			})
-		});
+    const result = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "X-Requested-With": "XMLHttpRequest"
+      },
+      body: JSON.stringify({
+        upload_preset: preset,
+        file: "data:image/png;base64," + file,
+        public_id: "" + imageName
+      })
+    });
 
-		return imageName;
-	}
+    return imageName;
+  }
 
-	function fill(pathPoints, width, height, imageName, angle, pixel, quality) {
-		// https://res.cloudinary.com/daqbtlcya/image/upload/c_fit,e_distort:0:238:347:0:1094:579:749:871,h_871,w_1094/v1573028294/34448089.jpg
-		var rotationAngle = 0;
-		var coordinates = {};
-		var pixelDensity = 0;
-		var qValue;
+  function fill(pathPoints, width, height, imageName, angle, pixel, quality) {
+    // https://res.cloudinary.com/daqbtlcya/image/upload/c_fit,e_distort:0:238:347:0:1094:579:749:871,h_871,w_1094/v1573028294/34448089.jpg
+    var rotationAngle = 0;
+    var coordinates = {};
+    var pixelDensity = 0;
+    var qValue;
 
-		if (angle === 'Rotate Left') {
-			rotationAngle = -90;
-		} else if (angle === 'Rotate Right') {
-			rotationAngle = 90;
-		} else if (angle === 'Flip') {
-			rotationAngle = 180;
-		} else {
-			rotationAngle = 0;
-			coordinates = pathPoints;
-		}
+    if (angle === "Rotate Left") {
+      rotationAngle = -90;
+    } else if (angle === "Rotate Right") {
+      rotationAngle = 90;
+    } else if (angle === "Flip") {
+      rotationAngle = 180;
+    } else {
+      rotationAngle = 0;
+      coordinates = pathPoints;
+    }
 
-		if (pixel === '3x') {
-			pixelDensity = 3.0;
-		} else if (pixel === '4x') {
-			pixelDensity = 4.0;
-		} else if (pixel === '1x') {
-			pixelDensity = 1.0;
-		} else if (pixel === '2x') {
-			pixelDensity = 2.0;
-		} else {
-			pixelDensity = 3.0;
-		}
+    if (pixel === "3x") {
+      pixelDensity = 3.0;
+    } else if (pixel === "4x") {
+      pixelDensity = 4.0;
+    } else if (pixel === "1x") {
+      pixelDensity = 1.0;
+    } else if (pixel === "2x") {
+      pixelDensity = 2.0;
+    } else {
+      pixelDensity = 2.0;
+    }
 
-		if (quality === 'Best') {
-			qValue = 'best';
-		} else if (quality === 'Better') {
-			qValue = 'good';
-		} else if (quality === 'Good') {
-			qValue = 'eco';
-		} else if (quality === 'Average') {
-			qValue = 'low';
-		} else {
-			qValue = 'best';
-		}
+    if (quality === "Best") {
+      qValue = "best";
+    } else if (quality === "Better") {
+      qValue = "good";
+    } else if (quality === "Good") {
+      qValue = "eco";
+    } else if (quality === "Average") {
+      qValue = "low";
+    } else {
+      qValue = "best";
+    }
 
-		if (Object.keys(pathPoints).length === 8) {
-			const url =
-				`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
-				pathPoints.topLeftX * 3 +
-				':' +
-				pathPoints.topLeftY * 3 +
-				':' +
-				pathPoints.topRightX * 3 +
-				':' +
-				pathPoints.topRightY * 3 +
-				':' +
-				pathPoints.bottomLeftX * 3 +
-				':' +
-				pathPoints.bottomLeftY * 3 +
-				':' +
-				pathPoints.bottomRightX * 3 +
-				':' +
-				pathPoints.bottomRightY * 3 +
-				'w_' +
-				Math.round(width) +
-				',' +
-				'h_' +
-				Math.round(height) +
-				'/' +
-				'e_trim' +
-				'/' +
-				'a_' +
-				rotationAngle +
-				'/' +
-				imageName +
-				'.png';
+    if (Object.keys(pathPoints).length === 8) {
+      const url =
+        `https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
+        pathPoints.topLeftX * pixelDensity +
+        ":" +
+        pathPoints.topLeftY * pixelDensity +
+        ":" +
+        pathPoints.topRightX * pixelDensity +
+        ":" +
+        pathPoints.topRightY * pixelDensity +
+        ":" +
+        pathPoints.bottomLeftX * pixelDensity +
+        ":" +
+        pathPoints.bottomLeftY * pixelDensity +
+        ":" +
+        pathPoints.bottomRightX * pixelDensity +
+        ":" +
+        pathPoints.bottomRightY * pixelDensity +
+        "w_" +
+        Math.round(width) +
+        "," +
+        "h_" +
+        Math.round(height) +
+        "/" +
+        "e_trim" +
+        "/" +
+        "a_" +
+        rotationAngle +
+        "/" +
+        imageName +
+        ".png";
 
-			console.log('URL', url);
-			return url;
-		} else {
-			parent.postMessage({
-				pluginMessage: {
-					type: 'netWorkError',
-					message:
-						'Could not detect the 8 ponits or the selected artboard has above 8 ponits'
-				}
-			});
-		}
-	}
+      console.log("URL", url);
+      return url;
+    } else {
+      parent.postMessage({
+        pluginMessage: {
+          type: "netWorkError",
+          message:
+            "Could not detect the 8 ponits or the selected artboard has above 8 ponits"
+        }
+      });
+    }
+  }
 
-	function xhrBinary(url) {
-		return new Promise((resolve, reject) => {
-			const req = new XMLHttpRequest();
-			req.onload = () => {
-				if (req.status === 200) {
-					try {
-						const arr = new Uint8Array(req.response);
-						resolve(arr);
-					} catch (err) {
-						reject(`Couldnt parse response. ${err.message}, ${req.response}`);
-					}
-				} else {
-					reject(`Request had an error: ${req.status}`);
-					parent.postMessage(
-						{
-							pluginMessage: {
-								type: 'cloudinaryError',
-								message:
-									'The selected artboard exceeds 25 megapixels. Try downgrading the width/height.'
-							}
-						},
-						'*'
-					);
-				}
-			};
-			req.onerror = reject;
-			req.onabort = reject;
-			req.open('GET', url, true);
-			req.responseType = 'arraybuffer';
-			req.send();
-		});
-	}
-	function createOpition(optionName, selected) {
-		var x = document.createElement('OPTION');
-		x.setAttribute('value', optionName);
-		var t = document.createTextNode(optionName);
-		x.appendChild(t);
-		document.getElementById(selected).appendChild(x);
-	}
-	var selectedArtboard = '';
-	var selectedPixelDensity = '';
-	var selectedQuality = '';
-	var selectedOrientation = '';
-	try {
-		// get selected artboard
-		document.getElementById('artboard-select').addEventListener('change', function(event) {
-			selectedArtboard = event.target.value;
-		});
-		// get selected pixel density
-		document.getElementById('pixel-density-select').addEventListener('change', function(event) {
-			selectedPixelDensity = event.target.value;
-		});
-		document.getElementById('quality-select').addEventListener('change', function(event) {
-			selectedQuality = event.target.value;
-		});
-		document.getElementById('orientation-select').addEventListener('change', function(event) {
-			selectedOrientation = event.target.value;
-		});
-	} catch (error) {}
+  function xhrBinary(url) {
+    return new Promise((resolve, reject) => {
+      const req = new XMLHttpRequest();
+      req.onload = () => {
+        if (req.status === 200) {
+          try {
+            const arr = new Uint8Array(req.response);
+            resolve(arr);
+          } catch (err) {
+            reject(`Couldnt parse response. ${err.message}, ${req.response}`);
+          }
+        } else {
+          reject(`Request had an error: ${req.status}`);
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: "cloudinaryError",
+                message:
+                  "The selected artboard exceeds 25 megapixels. Try downgrading the width/height."
+              }
+            },
+            "*"
+          );
+        }
+      };
+      req.onerror = reject;
+      req.onabort = reject;
+      req.open("GET", url, true);
+      req.responseType = "arraybuffer";
+      req.send();
+    });
+  }
+  function createOpition(optionName, selected) {
+    var x = document.createElement("OPTION");
+    x.setAttribute("value", optionName);
+    var t = document.createTextNode(optionName);
+    x.appendChild(t);
+    document.getElementById(selected).appendChild(x);
+  }
+  var selectedArtboard = "";
+  var selectedPixelDensity = "";
+  var selectedQuality = "";
+  var selectedOrientation = "";
+  try {
+    // get selected artboard
+    document
+      .getElementById("artboard-select")
+      .addEventListener("change", function(event) {
+        selectedArtboard = event.target.value;
+      });
+    // get selected pixel density
+    document
+      .getElementById("pixel-density-select")
+      .addEventListener("change", function(event) {
+        selectedPixelDensity = event.target.value;
+      });
+    document
+      .getElementById("quality-select")
+      .addEventListener("change", function(event) {
+        selectedQuality = event.target.value;
+      });
+    document
+      .getElementById("orientation-select")
+      .addEventListener("change", function(event) {
+        selectedOrientation = event.target.value;
+      });
+  } catch (error) {}
 
-	function create() {
-		const loader = document.getElementById('loading');
-		const createButton = document.getElementById('create');
-		createButton.classList.add('invisible');
-		loader.classList.remove('invisible');
+  function create() {
+    const loader = document.getElementById("loading");
+    const createButton = document.getElementById("create");
+    createButton.classList.add("invisible");
+    loader.classList.remove("invisible");
 
-		parent.postMessage(
-			{
-				pluginMessage: {
-					type: 'convertSelectedArtboard',
-					selectedArtboard: selectedArtboard,
-					selectedPixelDensity: selectedPixelDensity,
-					selectedQuality: selectedQuality,
-					selectedOrientation: selectedOrientation
-				}
-			},
-			'*'
-		);
-	}
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: "convertSelectedArtboard",
+          selectedArtboard: selectedArtboard,
+          selectedPixelDensity: selectedPixelDensity,
+          selectedQuality: selectedQuality,
+          selectedOrientation: selectedOrientation
+        }
+      },
+      "*"
+    );
+  }
 
-	function cancel() {
-		parent.postMessage(
-			{
-				pluginMessage: {
-					type: 'cancel-modal'
-				}
-			},
-			'*'
-		);
-	}
+  function cancel() {
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: "cancel-modal"
+        }
+      },
+      "*"
+    );
+  }
 
-	window.addEventListener('message', event => {
-		if (event.data.pluginMessage.type === 'allNodeNames') {
-			event.data.pluginMessage.nodeNames.map(function(item) {
-				createOpition(item, 'artboard-select');
-			});
-		}
+  window.addEventListener("message", event => {
+    if (event.data.pluginMessage.type === "allNodeNames") {
+      event.data.pluginMessage.nodeNames.map(function(item) {
+        createOpition(item, "artboard-select");
+      });
+    }
 
-		if (event.data.pluginMessage.type === 'networkRequest') {
-			const unit8Array = event.data.pluginMessage.uint8Array;
-			const base64String = Uint8ToBase64(unit8Array);
-			const coordinates = event.data.pluginMessage.ponits;
-			const width = event.data.pluginMessage.width;
-			const height = event.data.pluginMessage.height;
-			const oreintation = event.data.pluginMessage.selectedOrientation;
-			const pixelDensity = event.data.pluginMessage.selectedPixelDensity;
-			const quality = event.data.pluginMessage.selectedQuality;
+    if (event.data.pluginMessage.type === "networkRequest") {
+      const unit8Array = event.data.pluginMessage.uint8Array;
+      const base64String = Uint8ToBase64(unit8Array);
+      const coordinates = event.data.pluginMessage.ponits;
+      const width = event.data.pluginMessage.width;
+      const height = event.data.pluginMessage.height;
+      const oreintation = event.data.pluginMessage.selectedOrientation;
+      const pixelDensity = event.data.pluginMessage.selectedPixelDensity;
+      const quality = event.data.pluginMessage.selectedQuality;
 
-			uploadCloudinaryFile(base64String).then(name => {
-				xhrBinary(
-					fill(
-						coordinates,
-						width,
-						height,
-						name,
-						oreintation,
-						pixelDensity,
-						selectedQuality
-					)
-				).then(response => {
-					parent.postMessage(
-						{ pluginMessage: { type: 'networkResponse', response } },
-						'*'
-					);
-				});
-			});
-		}
-	});
+      uploadCloudinaryFile(base64String).then(name => {
+        xhrBinary(
+          fill(
+            coordinates,
+            width,
+            height,
+            name,
+            oreintation,
+            pixelDensity,
+            selectedQuality
+          )
+        ).then(response => {
+          parent.postMessage(
+            { pluginMessage: { type: "networkResponse", response } },
+            "*"
+          );
+        });
+      });
+    }
+  });
 </script>
