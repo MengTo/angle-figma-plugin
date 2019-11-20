@@ -75,6 +75,7 @@ function angleFill(array, node) {
 // Listen For All postMessages Coming Back From The UI
 figma.ui.on('message', uiResponse => {
 	if (figma.currentPage.selection.length === 0) {
+		figma.notify('please choose a screen');
 		figma.closePlugin();
 	}
 	try {
