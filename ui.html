@@ -82,8 +82,11 @@
     </div>
 
     <div class="flex justify-center">
-      <p class="text-base text-gray-500 tracking-wide pt-2">
-        Choose a Frame to apply onto your selected shape
+      <p
+        class="text-base text-gray-500 tracking-wide pt-2 content-center"
+        style="text-align: center"
+      >
+        Choose a Screen Shape from a mockup and apply your Screen Artboard.
       </p>
     </div>
 
@@ -91,11 +94,12 @@
       <div class="mr-8">
         <p class="text-base text-gray-500 tracking-wide pt-2">Artboard</p>
 
-        <div class="inline-block relative w-32">
+        <div class="inline-block relative w-64">
           <select
             class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
             id="artboard-select"
           >
+            <option>Choose Screen Artboard</option>
           </select>
           <div
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -171,7 +175,7 @@
         </div>
       </div>
 
-      <div class="mr-8">
+      <!-- <div class="mr-8">
         <p class="text-base text-gray-500 tracking-wide pt-2">Orientation</p>
 
         <div class="inline-block relative w-50">
@@ -200,7 +204,7 @@
             </svg>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div id="loading" class="flex justify-center mt-10 invisible">
