@@ -77,9 +77,12 @@ function angleFill(array, node) {
 }
 // Listen For All postMessages Coming Back From The UI
 figma.ui.on('message', uiResponse => {
+    if (figma.currentPage.selection.length === 0) {
+        figma.closePlugin();
+    }
     try {
         if (uiResponse.type === 'convertSelectedArtboard') {
-            if (uiResponse.selectedArtboard.length !== 0) {
+            if (uiResponse.selectedArtboard.length !== 0 && figma.currentPage.selection[0]) {
                 const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
                 const coordinates = {};
                 if (currentUserSelection.type === 'VECTOR') {
