@@ -82,19 +82,13 @@ function angleFill(array, node) {
 }
 // Listen For All postMessages Coming Back From The UI
 figma.ui.on('message', uiResponse => {
-    if (uiResponse.selectedArtboard === figma.currentPage.selection[0].parent.parent.parent.name) {
-        figma.notify('Please make sure it has a fill');
-        figma.closePlugin();
-    }
     try {
         if (uiResponse.type === 'convertSelectedArtboard') {
-            if (uiResponse.selectedArtboard.length !== 0 && figma.currentPage.selection[0]) {
+            if (uiResponse.selectedArtboard.length !== 0) {
                 const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
                 if (currentUserSelection.type === 'RECTANGLE') {
-                    figma.flatten([figma.currentPage.selection[0]]);
-                    // figma.notify(
-                    // 	`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`
-                    // );
+                    // figma.flatten([figma.currentPage.selection[0]]);
+                    figma.notify(`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`);
                 }
                 const coordinates = {};
                 if (currentUserSelection.type === 'VECTOR') {
@@ -125,9 +119,7 @@ figma.ui.on('message', uiResponse => {
                 const selectedQuality = uiResponse.selectedQuality;
                 const selectedPixelDensity = uiResponse.selectedPixelDensity;
                 // User Selection Of Artboard
-                if (selectedNode.type === 'FRAME' ||
-                    (selectedNode.type === 'GROUP' &&
-                        figma.currentPage.selection[0].fills !== undefined)) {
+                if (selectedNode.type === 'FRAME' || selectedNode.type === 'GROUP') {
                     invertNode(selectedNode).then(response => {
                         figma.ui.postMessage({
                             selectedOrientation: selectedOrientation,
@@ -140,6 +132,18 @@ figma.ui.on('message', uiResponse => {
                             height: currentUserSelection.height
                         });
                     });
+                    // 	if (figma.currentPage.selection[0].fills) {
+                    // 		const fills = Array.from(figma.currentPage.selection[0].fills);
+                    // 		fills.push({
+                    // 			type: 'IMAGE',
+                    // 			visible: true,
+                    // 			opacity: 1,
+                    // 			scaleMode: 'FILL',
+                    // 			imageHash: 'efe98099a0aa97c1aa64e286bc82e633cc9aed22'
+                    // 		});
+                    // 		figma.currentPage.selection[0].fills = fills;
+                    // 	}
+                    // }
                     if (figma.currentPage.selection[0].fills &&
                         uiResponse.selectedArtboard !==
                             figma.currentPage.selection[0].parent.parent.parent.name) {
@@ -153,6 +157,11 @@ figma.ui.on('message', uiResponse => {
                         });
                         figma.currentPage.selection[0].fills = fills;
                     }
+                }
+                if (uiResponse.selectedArtboard ===
+                    figma.currentPage.selection[0].parent.parent.parent.name) {
+                    figma.closePlugin();
+                    figma.notify('Please choose a fill');
                 }
                 // base image if the selected artboard is an image
                 const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
@@ -168,7 +177,6 @@ figma.ui.on('message', uiResponse => {
         else if (uiResponse.type === 'networkResponse') {
             const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
             const selectedImage = angleFill(uiResponse.response, currentUserSelection);
-            // fixes unsaved
             if (cloneOfScreen.length > 1) {
                 const c = cloneOfScreen.slice(1);
                 c[0] = selectedImage[0];
