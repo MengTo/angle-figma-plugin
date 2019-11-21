@@ -78,6 +78,11 @@ figma.ui.on('message', uiResponse => {
 		figma.notify('please choose a screen');
 		figma.closePlugin();
 	}
+
+	if (figma.currentPage.selection[0].fills === undefined) {
+		figma.closePlugin();
+		figma.notify('Please make sure to have a Fill');
+	}
 	try {
 		if (uiResponse.type === 'convertSelectedArtboard') {
 			if (uiResponse.selectedArtboard.length !== 0 && figma.currentPage.selection[0]) {
@@ -124,7 +129,11 @@ figma.ui.on('message', uiResponse => {
 				const selectedPixelDensity = uiResponse.selectedPixelDensity;
 
 				// User Selection Of Artboard
-				if (selectedNode.type === 'FRAME' || selectedNode.type === 'GROUP') {
+				if (
+					selectedNode.type === 'FRAME' ||
+					(selectedNode.type === 'GROUP' &&
+						figma.currentPage.selection[0].fills !== undefined)
+				) {
 					invertNode(selectedNode).then(response => {
 						figma.ui.postMessage({
 							selectedOrientation: selectedOrientation,
@@ -164,6 +173,7 @@ figma.ui.on('message', uiResponse => {
 			const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
 			const selectedImage = angleFill(uiResponse.response, currentUserSelection);
 
+			// fixes unsaved
 			if (cloneOfScreen.length > 1) {
 				const c = cloneOfScreen.slice(1);
 				c[0] = selectedImage[0];
