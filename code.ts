@@ -1,6 +1,13 @@
 if (figma.command === 'applyMockup') {
 	figma.showUI(__html__, { width: 790, height: 475 });
 }
+if (
+	figma.currentPage.selection[0].fills === undefined ||
+	figma.currentPage.selection[0].fills.length === 0
+) {
+	figma.closePlugin();
+	figma.notify('Please make sure to have a Fill');
+}
 
 const currentUserSelection = figma.currentPage.selection[0];
 const allFigmaNodes = figma.currentPage.children;
@@ -79,14 +86,17 @@ figma.ui.on('message', uiResponse => {
 		figma.closePlugin();
 	}
 
-	if (figma.currentPage.selection[0].fills === undefined) {
-		figma.closePlugin();
-		figma.notify('Please make sure to have a Fill');
-	}
 	try {
 		if (uiResponse.type === 'convertSelectedArtboard') {
 			if (uiResponse.selectedArtboard.length !== 0 && figma.currentPage.selection[0]) {
 				const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
+
+				if (currentUserSelection.type === 'RECTANGLE') {
+					figma.flatten([figma.currentPage.selection[0]]);
+					// figma.notify(
+					// 	`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`
+					// );
+				}
 
 				const coordinates = {};
 				if (currentUserSelection.type === 'VECTOR') {
@@ -116,12 +126,6 @@ figma.ui.on('message', uiResponse => {
 							height: currentUserSelection.height
 						});
 					});
-				}
-
-				if (currentUserSelection.type === 'RECTANGLE') {
-					figma.notify(
-						`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`
-					);
 				}
 
 				const selectedOrientation = uiResponse.selectedOrientation;
