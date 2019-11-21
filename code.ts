@@ -81,11 +81,10 @@ function angleFill(array, node) {
 
 // Listen For All postMessages Coming Back From The UI
 figma.ui.on('message', uiResponse => {
-	if (figma.currentPage.selection.length === 0) {
-		figma.notify('please choose a screen');
+	if (uiResponse.selectedArtboard === figma.currentPage.selection[0].parent.parent.parent.name) {
+		figma.notify('Please make sure it has a fill');
 		figma.closePlugin();
 	}
-
 	try {
 		if (uiResponse.type === 'convertSelectedArtboard') {
 			if (uiResponse.selectedArtboard.length !== 0 && figma.currentPage.selection[0]) {
@@ -151,7 +150,11 @@ figma.ui.on('message', uiResponse => {
 						});
 					});
 
-					if (figma.currentPage.selection[0].fills) {
+					if (
+						figma.currentPage.selection[0].fills &&
+						uiResponse.selectedArtboard !==
+							figma.currentPage.selection[0].parent.parent.parent.name
+					) {
 						const fills = Array.from(figma.currentPage.selection[0].fills);
 						fills.push({
 							type: 'IMAGE',
