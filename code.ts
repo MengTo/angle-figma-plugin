@@ -93,27 +93,27 @@ function angleFill(array, node) {
 // Listen For All postMessages Coming Back From The UI
 figma.ui.on('message', uiResponse => {
 	if (currentUserSelection.type === 'RECTANGLE') {
-		const convertedVector = figma.flatten([currentUserSelection]);
-		const newVectorNode = figma.getNodeById(convertedVector.id);
+		// const convertedVector = figma.flatten([currentUserSelection]);
+		// const newVectorNode = figma.getNodeById(convertedVector.id);
 
-		const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
-		const coordinates = {};
+		// const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
+		// const coordinates = {};
 
-		console.log(true);
-		coordinates.topLeftX = newVectorNode.vectorNetwork.vertices[0].x;
-		coordinates.topLeftY = newVectorNode.vectorNetwork.vertices[0].y;
+		// console.log(true);
+		// coordinates.topLeftX = newVectorNode.vectorNetwork.vertices[0].x;
+		// coordinates.topLeftY = newVectorNode.vectorNetwork.vertices[0].y;
 
-		// // TOP RIGHT
-		coordinates.topRightX = newVectorNode.vectorNetwork.vertices[1].x;
-		coordinates.topRightY = newVectorNode.vectorNetwork.vertices[1].y;
+		// // // TOP RIGHT
+		// coordinates.topRightX = newVectorNode.vectorNetwork.vertices[1].x;
+		// coordinates.topRightY = newVectorNode.vectorNetwork.vertices[1].y;
 
-		// // BOTTOM LEFT
-		coordinates.bottomLeftX = newVectorNode.vectorNetwork.vertices[2].x;
-		coordinates.bottomLeftY = newVectorNode.vectorNetwork.vertices[2].y;
+		// // // BOTTOM LEFT
+		// coordinates.bottomLeftX = newVectorNode.vectorNetwork.vertices[2].x;
+		// coordinates.bottomLeftY = newVectorNode.vectorNetwork.vertices[2].y;
 
-		// // BOTTOM RIGHT
-		coordinates.bottomRightX = newVectorNode.vectorNetwork.vertices[3].x;
-		coordinates.bottomRightY = newVectorNode.vectorNetwork.vertices[3].y;
+		// // // BOTTOM RIGHT
+		// coordinates.bottomRightX = newVectorNode.vectorNetwork.vertices[3].x;
+		// coordinates.bottomRightY = newVectorNode.vectorNetwork.vertices[3].y;
 
 		// invertImages(selectedNode).then(arr => {
 		// 	figma.ui.postMessage({
@@ -127,11 +127,11 @@ figma.ui.on('message', uiResponse => {
 		// 	});
 		// });
 
-		console.log(newVectorNode);
+		// console.log(newVectorNode);
 
-		// figma.notify(
-		// 	`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`
-		// );
+		figma.notify(
+			`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`
+		);
 	}
 	try {
 		if (uiResponse.type === 'convertSelectedArtboard') {
