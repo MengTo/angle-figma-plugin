@@ -16,10 +16,20 @@ const allFigmaNodes = figma.currentPage.children;
 // NOTE Loop Over All The Node Names And Send It To The UI
 let nodesNames = [];
 figma.currentPage.children.map(function(node) {
-	nodesNames.push(node.name);
-	nodesNames.reverse();
+	try {
+		node.children.filter(item => {
+			item.children.filter(x => {
+				if (x.type !== 'GROUP') {
+					nodesNames.push(node.name);
+				}
+			});
+		});
+	} catch (error) {}
 });
-figma.ui.postMessage({ type: 'allNodeNames', nodeNames: nodesNames });
+const getRidOfDoubles = new Set(nodesNames);
+const newNodeNames = [...getRidOfDoubles];
+
+figma.ui.postMessage({ type: 'allNodeNames', nodeNames: newNodeNames.sort() });
 
 /*
 NOTE Steps For The Angle Fill (Perspective Transform)
