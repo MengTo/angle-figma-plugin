@@ -92,44 +92,18 @@ function angleFill(array, node) {
 }
 // Listen For All postMessages Coming Back From The UI
 figma.ui.on('message', uiResponse => {
-    if (currentUserSelection.type === 'RECTANGLE') {
-        // const convertedVector = figma.flatten([currentUserSelection]);
-        // const newVectorNode = figma.getNodeById(convertedVector.id);
-        // const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
-        // const coordinates = {};
-        // console.log(true);
-        // coordinates.topLeftX = newVectorNode.vectorNetwork.vertices[0].x;
-        // coordinates.topLeftY = newVectorNode.vectorNetwork.vertices[0].y;
-        // // // TOP RIGHT
-        // coordinates.topRightX = newVectorNode.vectorNetwork.vertices[1].x;
-        // coordinates.topRightY = newVectorNode.vectorNetwork.vertices[1].y;
-        // // // BOTTOM LEFT
-        // coordinates.bottomLeftX = newVectorNode.vectorNetwork.vertices[2].x;
-        // coordinates.bottomLeftY = newVectorNode.vectorNetwork.vertices[2].y;
-        // // // BOTTOM RIGHT
-        // coordinates.bottomRightX = newVectorNode.vectorNetwork.vertices[3].x;
-        // coordinates.bottomRightY = newVectorNode.vectorNetwork.vertices[3].y;
-        // invertImages(selectedNode).then(arr => {
-        // 	figma.ui.postMessage({
-        // 		type: 'networkRequest',
-        // 		uint8Array: arr,
-        // 		ponits: coordinates,
-        // 		selectedPixelDensity: uiResponse.selectedPixelDensity,
-        // 		selectedQuality: uiResponse.selectedQuality,
-        // 		width: newVectorNode.width,
-        // 		height: newVectorNode.height
-        // 	});
-        // });
-        // console.log(newVectorNode);
-        figma.notify(`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`);
-    }
     try {
         if (uiResponse.type === 'convertSelectedArtboard') {
             if (uiResponse.selectedArtboard.length !== 0) {
                 const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
                 const coordinates = {};
+                if (currentUserSelection.type === 'RECTANGLE') {
+                    // figma.flatten([figma.currentPage.selection[0]]);
+                    figma.closePlugin();
+                    figma.notify(`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`);
+                }
                 if (currentUserSelection.type === 'VECTOR') {
-                    console.log(true);
+                    console.log(currentUserSelection);
                     coordinates.topLeftX = currentUserSelection.vectorNetwork.vertices[0].x;
                     coordinates.topLeftY = currentUserSelection.vectorNetwork.vertices[0].y;
                     // // TOP RIGHT
@@ -195,6 +169,17 @@ figma.ui.on('message', uiResponse => {
                         });
                         figma.currentPage.selection[0].fills = fills;
                     }
+                    // if (currentUserSelection.fills) {
+                    // 	const fills = Array.from(currentUserSelection.fills);
+                    // 	fills.push({
+                    // 		type: 'IMAGE',
+                    // 		visible: true,
+                    // 		opacity: 1,
+                    // 		scaleMode: 'FILL',
+                    // 		imageHash: 'efe98099a0aa97c1aa64e286bc82e633cc9aed22'
+                    // 	});
+                    // 	currentUserSelection.fills = fills;
+                    // }
                 }
                 if (uiResponse.selectedArtboard ===
                     figma.currentPage.selection[0].parent.parent.parent.name) {
@@ -214,7 +199,34 @@ figma.ui.on('message', uiResponse => {
         }
         else if (uiResponse.type === 'networkResponse') {
             const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
+            const fills = clone(currentUserSelection.fills);
             const selectedImage = angleFill(uiResponse.response, currentUserSelection);
+            // if (currentUserSelection) {
+            // 	const newFills = [];
+            // 	const paint = currentUserSelection.fills[0];
+            // 	if (paint.type === 'IMAGE') {
+            // 		const newPaint = JSON.parse(JSON.stringify(paint));
+            // 		newPaint.imageHash = figma.createImage(uiResponse.response).hash;
+            // 		newFills.push(newPaint);
+            // 		fills[0] = newFills[0];
+            // 		currentUserSelection.fills = fills;
+            // 	}
+            // }
+            // if (
+            // 	figma.currentPage.selection[0].fills &&
+            // 	uiResponse.selectedArtboard !==
+            // 		figma.currentPage.selection[0].parent.parent.parent.name
+            // ) {
+            // 	const fills = Array.from(figma.currentPage.selection[0].fills);
+            // 	fills.push({
+            // 		type: 'IMAGE',
+            // 		visible: true,
+            // 		opacity: 1,
+            // 		scaleMode: 'FILL',
+            // 		imageHash: 'efe98099a0aa97c1aa64e286bc82e633cc9aed22'
+            // 	});
+            // 	figma.currentPage.selection[0].fills = fills;
+            // }
             if (cloneOfScreen.length > 1) {
                 const c = cloneOfScreen.slice(1);
                 c[0] = selectedImage[0];
@@ -234,6 +246,26 @@ figma.ui.on('message', uiResponse => {
             figma.closePlugin();
             figma.notify(uiResponse.message);
         }
+        console.log(uiResponse);
+        // if (uiResponse.type === 'networkResponseRectangle') {
+        // 	console.log(true);
+        // 	const vectorNode = figma.currentPage.children[figma.currentPage.children.length - 1];
+        // 	const fills = clone(vectorNode.fills);
+        // 	if (vectorNode.fills) {
+        // 		fills[0] = {
+        // 			type: 'IMAGE',
+        // 			visible: true,
+        // 			opacity: 1,
+        // 			scaleMode: 'FILL',
+        // 			imageHash: 'efe98099a0aa97c1aa64e286bc82e633cc9aed22'
+        // 		};
+        // 		vectorNode.fills = fills;
+        // 	}
+        // 	const selectedImage = angleFill(uiResponse.response, vectorNode);
+        // 	fills[0] = selectedImage[0];
+        // 	vectorNode.fills = fills;
+        // 	figma.closePlugin();
+        // }
     }
     catch (error) {
         console.log('loading...');
