@@ -16,20 +16,21 @@ const allFigmaNodes = figma.currentPage.children;
 // NOTE Loop Over All The Node Names And Send It To The UI
 let nodesNames = [];
 figma.currentPage.children.map(function(node) {
-	try {
-		node.children.filter(item => {
-			item.children.filter(x => {
-				if (x.type !== 'GROUP') {
-					nodesNames.push(node.name);
-				}
-			});
-		});
-	} catch (error) {}
+	// try {
+	// 	node.children.filter(item => {
+	// 		item.children.filter(x => {
+	// 			if (x.type !== 'GROUP') {
+	// 				nodesNames.push(node.name);
+	// 			}
+	// 		});
+	// 	});
+	// } catch (error) {}
+	nodesNames.push(node.name);
 });
-const getRidOfDoubles = new Set(nodesNames);
-const newNodeNames = [...getRidOfDoubles];
+// const getRidOfDoubles = new Set(nodesNames);
+// const newNodeNames = [...getRidOfDoubles];
 
-figma.ui.postMessage({ type: 'allNodeNames', nodeNames: newNodeNames.sort() });
+figma.ui.postMessage({ type: 'allNodeNames', nodeNames: nodesNames });
 
 /*
 NOTE Steps For The Angle Fill (Perspective Transform)
@@ -253,6 +254,7 @@ figma.ui.on('message', uiResponse => {
 		} else if (uiResponse.type === 'netWorkError') {
 			figma.notify(uiResponse.message);
 		} else if (uiResponse.type === 'cloudinaryError') {
+			figma.closePlugin();
 			figma.notify(uiResponse.message);
 		}
 	} catch (error) {

@@ -338,8 +338,47 @@
 			qValue = 'best';
 		}
 		if (Object.keys(pathPoints).length === 8) {
+			// const url =
+			// 	`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
+			// 	pathPoints.topLeftX * pixelDensity +
+			// 	':' +
+			// 	pathPoints.topLeftY * pixelDensity +
+			// 	':' +
+			// 	pathPoints.topRightX * pixelDensity +
+			// 	':' +
+			// 	pathPoints.topRightY * pixelDensity +
+			// 	':' +
+			// 	pathPoints.bottomLeftX * pixelDensity +
+			// 	':' +
+			// 	pathPoints.bottomLeftY * pixelDensity +
+			// 	':' +
+			// 	pathPoints.bottomRightX * pixelDensity +
+			// 	':' +
+			// 	pathPoints.bottomRightY * pixelDensity +
+			// 	'w_' +
+			// 	Math.round(width) +
+			// 	',' +
+			// 	'h_' +
+			// 	Math.round(height) +
+			// 	'/' +
+			// 	'e_trim' +
+			// 	'/' +
+			// 	'a_' +
+			// 	rotationAngle +
+			// 	'/' +
+			// 	imageName +
+			// 	'.png';
+			// console.log('URL', url);
+
+			// console.log('width', width);
+			// console.log('height', height);
+
+			// const megapixels = width * height;
+
+			// console.log('megapixels', Math.round(megapixels));
+
 			const url =
-				`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
+				`https://res.cloudinary.com/design-code/image/upload/e_distort:` +
 				pathPoints.topLeftX * pixelDensity +
 				':' +
 				pathPoints.topLeftY * pixelDensity +
@@ -368,7 +407,7 @@
 				'/' +
 				imageName +
 				'.png';
-			console.log('URL', url);
+
 			return url;
 		} else {
 			parent.postMessage({

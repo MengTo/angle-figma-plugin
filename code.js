@@ -20,20 +20,20 @@ const allFigmaNodes = figma.currentPage.children;
 // NOTE Loop Over All The Node Names And Send It To The UI
 let nodesNames = [];
 figma.currentPage.children.map(function (node) {
-    try {
-        node.children.filter(item => {
-            item.children.filter(x => {
-                if (x.type !== 'GROUP') {
-                    nodesNames.push(node.name);
-                }
-            });
-        });
-    }
-    catch (error) { }
+    // try {
+    // 	node.children.filter(item => {
+    // 		item.children.filter(x => {
+    // 			if (x.type !== 'GROUP') {
+    // 				nodesNames.push(node.name);
+    // 			}
+    // 		});
+    // 	});
+    // } catch (error) {}
+    nodesNames.push(node.name);
 });
-const getRidOfDoubles = new Set(nodesNames);
-const newNodeNames = [...getRidOfDoubles];
-figma.ui.postMessage({ type: 'allNodeNames', nodeNames: newNodeNames.sort() });
+// const getRidOfDoubles = new Set(nodesNames);
+// const newNodeNames = [...getRidOfDoubles];
+figma.ui.postMessage({ type: 'allNodeNames', nodeNames: nodesNames });
 /*
 NOTE Steps For The Angle Fill (Perspective Transform)
 1. Recieve The Selected Node From The User Via The UI and Grab The Unit 8 Array From That
@@ -93,22 +93,22 @@ function angleFill(array, node) {
 // Listen For All postMessages Coming Back From The UI
 figma.ui.on('message', uiResponse => {
     if (currentUserSelection.type === 'RECTANGLE') {
-        const convertedVector = figma.flatten([currentUserSelection]);
-        const newVectorNode = figma.getNodeById(convertedVector.id);
-        const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
-        const coordinates = {};
-        console.log(true);
-        coordinates.topLeftX = newVectorNode.vectorNetwork.vertices[0].x;
-        coordinates.topLeftY = newVectorNode.vectorNetwork.vertices[0].y;
-        // // TOP RIGHT
-        coordinates.topRightX = newVectorNode.vectorNetwork.vertices[1].x;
-        coordinates.topRightY = newVectorNode.vectorNetwork.vertices[1].y;
-        // // BOTTOM LEFT
-        coordinates.bottomLeftX = newVectorNode.vectorNetwork.vertices[2].x;
-        coordinates.bottomLeftY = newVectorNode.vectorNetwork.vertices[2].y;
-        // // BOTTOM RIGHT
-        coordinates.bottomRightX = newVectorNode.vectorNetwork.vertices[3].x;
-        coordinates.bottomRightY = newVectorNode.vectorNetwork.vertices[3].y;
+        // const convertedVector = figma.flatten([currentUserSelection]);
+        // const newVectorNode = figma.getNodeById(convertedVector.id);
+        // const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
+        // const coordinates = {};
+        // console.log(true);
+        // coordinates.topLeftX = newVectorNode.vectorNetwork.vertices[0].x;
+        // coordinates.topLeftY = newVectorNode.vectorNetwork.vertices[0].y;
+        // // // TOP RIGHT
+        // coordinates.topRightX = newVectorNode.vectorNetwork.vertices[1].x;
+        // coordinates.topRightY = newVectorNode.vectorNetwork.vertices[1].y;
+        // // // BOTTOM LEFT
+        // coordinates.bottomLeftX = newVectorNode.vectorNetwork.vertices[2].x;
+        // coordinates.bottomLeftY = newVectorNode.vectorNetwork.vertices[2].y;
+        // // // BOTTOM RIGHT
+        // coordinates.bottomRightX = newVectorNode.vectorNetwork.vertices[3].x;
+        // coordinates.bottomRightY = newVectorNode.vectorNetwork.vertices[3].y;
         // invertImages(selectedNode).then(arr => {
         // 	figma.ui.postMessage({
         // 		type: 'networkRequest',
@@ -120,10 +120,8 @@ figma.ui.on('message', uiResponse => {
         // 		height: newVectorNode.height
         // 	});
         // });
-        console.log(newVectorNode);
-        // figma.notify(
-        // 	`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`
-        // );
+        // console.log(newVectorNode);
+        figma.notify(`Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node`);
     }
     try {
         if (uiResponse.type === 'convertSelectedArtboard') {
@@ -233,6 +231,7 @@ figma.ui.on('message', uiResponse => {
             figma.notify(uiResponse.message);
         }
         else if (uiResponse.type === 'cloudinaryError') {
+            figma.closePlugin();
             figma.notify(uiResponse.message);
         }
     }
