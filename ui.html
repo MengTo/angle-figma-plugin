@@ -379,7 +379,7 @@
 			// console.log('megapixels', Math.round(megapixels));
 
 			const url =
-				`https://res.cloudinary.com/design-code/image/upload/e_distort:` +
+				`https://res.cloudinary.com/design-code/image/upload/dpr_${pixelDensity},q_auto:${qValue},e_distort:` +
 				pathPoints.topLeftX * pixelDensity +
 				':' +
 				pathPoints.topLeftY * pixelDensity +
