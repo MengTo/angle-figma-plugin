@@ -43,11 +43,31 @@ try {
 
   // NOTE Loop Over All The Node Names And Send It To The UI
   let nodesNames = [];
+
+  const getRootFrame = node => {
+    if (node.parent && node.parent.type === "FRAME") {
+      return node.parent.name;
+    } else {
+      return getRootFrame(node.parent);
+    }
+  };
   figma.currentPage.children.map(function(node) {
-    nodesNames.push(node.name);
+    if (node.type === "FRAME") {
+      nodesNames.push(node.name);
+      const filterSelection = nodesNames.filter(
+        nodesNames => nodesNames !== getRootFrame(currentUserSelection)
+      );
+      nodesNames = filterSelection;
+    } else {
+      return;
+    }
   });
 
   figma.ui.postMessage({ type: "allNodeNames", nodeNames: nodesNames });
+
+  // Map throught the page and find all frame
+  // all frame -> filter and find one the one that has the selection
+  // using that const, we remove from the dropdown
 
   /*
 NOTE Steps For The Angle Fill (Perspective Transform)
