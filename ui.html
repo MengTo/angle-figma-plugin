@@ -19,6 +19,7 @@
 
 		#version {
 			color: #999999;
+			font-weight: 600;
 		}
 
 		#version-two {
@@ -60,7 +61,7 @@
 	</style>
 </head>
 <html>
-	<div class="container mx-auto p-16">
+	<div class="container mx-auto p-16 ">
 		<div class="flex justify-center">
 			<svg
 				width="40"
@@ -229,14 +230,14 @@
 			</button>
 		</div>
 	</div>
-	<hr />
-	<div class="flex justify-start">
-		<p id="version" class="tracking-wide mt-4 ml-4">Version 1.0</p>
-	</div>
+	<!-- <hr />
+  <div class="flex justify-start">
+    <p id="version" class="tracking-wide mt-4 ml-4">Version 1.0</p>
+  </div>
 
-	<div class="flex justify-end">
-		<p id="version-two" class="tracking-wide mr-4">Version 1.0</p>
-	</div>
+  <div class="flex justify-end">
+    <p id="version-two" class="tracking-wide mr-4">Version 1.0</p>
+  </div> -->
 </html>
 
 <script src="/lodash/lodash.js" type="text/javascript"></script>
@@ -297,7 +298,7 @@
 				public_id: '' + imageName
 			})
 		});
-		console.log(result);
+
 		return imageName;
 	}
 	function fill(pathPoints, width, height, imageName, angle, pixel, quality) {
@@ -427,7 +428,6 @@
 				if (req.status === 200) {
 					try {
 						const arr = new Uint8Array(req.response);
-						console.log('ARR', arr);
 						resolve(arr);
 					} catch (err) {
 						reject(`Couldnt parse response. ${err.message}, ${req.response}`);
@@ -535,37 +535,8 @@
 						selectedQuality
 					)
 				).then(response => {
-					console.log('RESPONSE', response);
 					parent.postMessage(
 						{ pluginMessage: { type: 'networkResponse', response } },
-						'*'
-					);
-				});
-			});
-		} else if (event.data.pluginMessage.type === 'networkRequestRectangle') {
-			const unit8Array = event.data.pluginMessage.uint8Array;
-			const base64String = Uint8ToBase64(unit8Array);
-			const coordinates = event.data.pluginMessage.ponits;
-			const width = event.data.pluginMessage.width;
-			const height = event.data.pluginMessage.height;
-			const oreintation = event.data.pluginMessage.selectedOrientation;
-			const pixelDensity = event.data.pluginMessage.selectedPixelDensity;
-			const quality = event.data.pluginMessage.selectedQuality;
-			uploadCloudinaryFile(base64String).then(name => {
-				xhrBinary(
-					fill(
-						coordinates,
-						width,
-						height,
-						name,
-						oreintation,
-						pixelDensity,
-						selectedQuality
-					)
-				).then(response => {
-					console.log('RESPONSE', response);
-					parent.postMessage(
-						{ pluginMessage: { type: 'networkResponseRectangle', response } },
 						'*'
 					);
 				});
