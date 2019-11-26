@@ -8,6 +8,13 @@ try {
     figma.notify("Please select a shape");
   }
 
+  if (figma.currentPage.selection[0].type !== "VECTOR") {
+    figma.closePlugin();
+    figma.notify(
+      `Your current selected screen is a ${figma.currentPage.selection[0].type} node. Please choose a Vector node instead`
+    );
+  }
+
   if (figma.command === "applyMockup") {
     figma.showUI(__html__, { width: 790, height: 500 });
   }
@@ -130,14 +137,6 @@ NOTE Steps For The Angle Fill (Perspective Transform)
         if (uiResponse.selectedArtboard.length !== 0) {
           const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
           const coordinates = {};
-
-          if (currentUserSelection.type === "RECTANGLE") {
-            // Add vertices in the middle of each path to make the rectangle -> shape
-            figma.closePlugin();
-            figma.notify(
-              `Your current selected screen is a ${currentUserSelection.type} node. Please choose a Vector node instead`
-            );
-          }
 
           if (currentUserSelection.type === "VECTOR") {
             console.log(currentUserSelection);
