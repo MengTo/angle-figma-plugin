@@ -13,11 +13,11 @@ try {
     }
     if (figma.currentPage.selection.length === 0) {
         figma.closePlugin();
-        figma.notify("Please select a shape");
+        figma.notify("Please select a Vector.");
     }
     if (figma.currentPage.selection[0].type !== "VECTOR") {
         figma.closePlugin();
-        figma.notify(`Your current selected screen is a ${figma.currentPage.selection[0].type} node. Please choose a Vector node instead`);
+        figma.notify(`Your current selected screen is a ${figma.currentPage.selection[0].type} node. Please choose a Vector node instead.`);
     }
     if (figma.command === "applyMockup") {
         figma.showUI(__html__, { width: 790, height: 500 });
@@ -25,7 +25,7 @@ try {
     if (figma.currentPage.selection[0].type === "FRAME" ||
         figma.currentPage.selection[0].type === "GROUP") {
         figma.closePlugin();
-        figma.notify("Please select a shape");
+        figma.notify("Please select a Vector.");
     }
     if (figma.currentPage.selection[0].fills === undefined ||
         figma.currentPage.selection[0].fills.length === 0) {

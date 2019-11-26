@@ -1,25 +1,26 @@
 {
-	"name": "angle-figma-plugin",
-	"version": "1.0.0",
-	"description": "This plugin template uses Typescript. If you are familiar with Javascript, Typescript will look very familiar. In fact, valid Javascript code is already valid Typescript code.",
-	"main": "code.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/ThatGalNatalie/angle-figma-plugin.git"
-	},
-	"author": "Natalie Smith",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/ThatGalNatalie/angle-figma-plugin/issues"
-	},
-	"homepage": "https://github.com/ThatGalNatalie/angle-figma-plugin#readme",
-	"dependencies": {
-		"@types/node": "^12.12.6"
-	},
-	"devDependencies": {
-		"webpack-cli": "^3.3.10"
-	}
+  "name": "angle-figma-plugin",
+  "version": "1.0.0",
+  "description": "This plugin template uses Typescript. If you are familiar with Javascript, Typescript will look very familiar. In fact, valid Javascript code is already valid Typescript code.",
+  "main": "code.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MengTo/angle-figma-plugin.git"
+  },
+  "author": "Design+Code",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThatGalNatalie/angle-figma-plugin/issues"
+  },
+  "homepage": "https://github.com/ThatGalNatalie/angle-figma-plugin#readme",
+  "dependencies": {
+    "@types/node": "^12.12.6",
+    "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.10"
+  }
 }
