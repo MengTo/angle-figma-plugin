@@ -18,5 +18,8 @@
 	"homepage": "https://github.com/ThatGalNatalie/angle-figma-plugin#readme",
 	"dependencies": {
 		"@types/node": "^12.12.6"
+	},
+	"devDependencies": {
+		"webpack-cli": "^3.3.10"
 	}
 }
