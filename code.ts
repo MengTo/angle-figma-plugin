@@ -53,21 +53,21 @@ try {
   };
   figma.currentPage.children.map(function(node) {
     if (node.type === "FRAME") {
-      nodesNames.push(node.name);
-      const filterSelection = nodesNames.filter(
-        nodesNames => nodesNames !== getRootFrame(currentUserSelection)
-      );
-      nodesNames = filterSelection;
+      if (currentUserSelection.parent.type === "PAGE") {
+        nodesNames.push(node.name);
+      } else {
+        nodesNames.push(node.name);
+        const filterSelection = nodesNames.filter(
+          nodesNames => nodesNames !== getRootFrame(currentUserSelection)
+        );
+        nodesNames = filterSelection;
+      }
     } else {
       return;
     }
   });
 
   figma.ui.postMessage({ type: "allNodeNames", nodeNames: nodesNames });
-
-  // Map throught the page and find all frame
-  // all frame -> filter and find one the one that has the selection
-  // using that const, we remove from the dropdown
 
   /*
 NOTE Steps For The Angle Fill (Perspective Transform)
