@@ -163,6 +163,10 @@ try {
     }
     function networkRequest(node) {
         figma.ui.on('message', uiResponse => {
+            if (uiResponse.selectedArtboard.length === 0) {
+                figma.closePlugin();
+                figma.notify('Please choose an artboard');
+            }
             if (uiResponse.type === 'convertSelectedArtboard') {
                 if (uiResponse.selectedArtboard.length !== 0) {
                     const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
@@ -238,6 +242,10 @@ try {
                 if (uiResponse.type === 'cancel-modal') {
                     figma.closePlugin();
                 }
+                if (uiResponse.selectedArtboard.length === 0) {
+                    figma.closePlugin();
+                    figma.notify('Please choose an artboard');
+                }
                 if (uiResponse.type === 'convertSelectedArtboard') {
                     if (uiResponse.selectedArtboard.length !== 0) {
                         const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
@@ -288,6 +296,10 @@ try {
         figma.ui.on('message', uiResponse => {
             if (uiResponse.type === 'cancel-modal') {
                 figma.closePlugin();
+            }
+            if (uiResponse.selectedArtboard.length === 0) {
+                figma.closePlugin();
+                figma.notify('Please choose an artboard');
             }
             if (uiResponse.type === 'convertSelectedArtboard') {
                 if (uiResponse.selectedArtboard.length !== 0) {
