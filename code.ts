@@ -1,13 +1,56 @@
 try {
+	// Global Variables
+	const nodeNames = [];
+	var convertedNode = {};
+	var vectorNode = {};
+
 	// Displays Modal
 	if (figma.command === 'applyMockup') {
 		figma.showUI(__html__, { width: 790, height: 500 });
 	}
 
-	// Global Variables
-	const nodeNames = [];
-	var convertedNode = {};
-	var vectorNode = {};
+	// NOTE CurrentSelection Check
+
+	// Give message when there is no user selection
+	if (figma.currentPage.selection[0] === undefined) {
+		figma.notify('please choose a mockup');
+		figma.closePlugin();
+	}
+
+	if (
+		figma.currentPage.selection[0].type === 'INSTANCE' &&
+		figma.currentPage.selection[0].children[0].type !== 'RECTANGLE'
+	) {
+		figma.notify(
+			`Your current selection is a ${figma.currentPage.selection[0].children[0].type}. Please choose a vector or rectangle.`
+		);
+		figma.closePlugin();
+	}
+
+	if (
+		figma.currentPage.selection[0].type !== 'VECTOR' &&
+		figma.currentPage.selection[0].type !== 'RECTANGLE' &&
+		figma.currentPage.selection[0].type !== 'INSTANCE'
+	) {
+		figma.notify(
+			`Your current selection is a ${figma.currentPage.selection[0].type}. Please choose a vector or rectangle.`
+		);
+		figma.closePlugin();
+	}
+
+	// put a fill (black and white image) if the node has an empty fill
+	if (figma.currentPage.selection[0].fills.length === 0) {
+		console.log('there is no fill');
+		const fills = Array.from(figma.currentPage.selection[0].fills);
+		fills.push({
+			type: 'IMAGE',
+			visible: true,
+			opacity: 1,
+			scaleMode: 'FILL',
+			imageHash: 'efe98099a0aa97c1aa64e286bc82e633cc9aed22'
+		});
+		figma.currentPage.selection[0].fills = fills;
+	}
 
 	function findSelectedNode(selectedNodeName) {
 		var result;
@@ -209,40 +252,72 @@ try {
 		});
 	}
 
-	// CurrentSelection Check
+	if (figma.currentPage.selection[0].type === 'VECTOR') {
+		console.log('the node is a vectorrrrrrrr');
+		const names = getAllNodeNames();
+		figma.ui.postMessage({ type: 'allNodeNames', nodeNames: names });
 
-	// Give message when there is no user selection
-	if (figma.currentPage.selection[0] === undefined) {
-		figma.notify('please choose a mockup');
-		figma.closePlugin();
+		// checkForNodeFills(figma.currentPage.selection[0]);
+		// networkRequest(figma.currentPage.selection[0]);
+
+		figma.ui.on('message', uiResponse => {
+			try {
+				if (uiResponse.type === 'cancel-modal') {
+					figma.closePlugin();
+				}
+
+				if (uiResponse.type === 'netWorkError') {
+					figma.notify(uiResponse.message);
+				}
+
+				if (uiResponse.type === 'cloudinaryError') {
+					figma.closePlugin();
+					figma.notify(uiResponse.message);
+				}
+
+				if (uiResponse.selectedArtboard.length === 0) {
+					figma.closePlugin();
+					figma.notify('Please choose an artboard');
+				}
+
+				if (uiResponse.type === 'convertSelectedArtboard') {
+					if (uiResponse.selectedArtboard.length !== 0) {
+						const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
+						angleArtboard(
+							figma.currentPage.selection[0],
+							selectedNode,
+							uiResponse.orientation,
+							uiResponse.pixel,
+							uiResponse.quality,
+							getCoordinates(figma.currentPage.selection[0]),
+							figma.currentPage.selection[0].width,
+							figma.currentPage.selection[0].height
+						);
+					}
+				}
+			} catch (error) {}
+			if (uiResponse.type === 'networkResponse') {
+				const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
+				const selectedImage = angleFill(
+					uiResponse.response,
+					figma.currentPage.selection[0]
+				);
+				if (cloneOfScreen.length > 1) {
+					const c = cloneOfScreen.slice(1);
+					c[0] = selectedImage[0];
+					figma.currentPage.selection[0].fills = c;
+				}
+				figma.closePlugin();
+			}
+		});
 	}
 
 	if (
-		figma.currentPage.selection[0].type === 'INSTANCE' &&
-		figma.currentPage.selection[0].children[0].type !== 'RECTANGLE'
+		(figma.currentPage.selection[0].type === 'RECTANGLE' &&
+			figma.currentPage.selection[0].parent.parent.parent === undefined) ||
+		figma.currentPage.selection[0].parent.parent.parent === null
 	) {
-		figma.notify(
-			`Your current selection is a ${figma.currentPage.selection[0].children[0].type}. Please choose a vector or rectangle.`
-		);
-		figma.closePlugin();
-	}
-
-	if (
-		figma.currentPage.selection[0].type !== 'VECTOR' &&
-		figma.currentPage.selection[0].type !== 'RECTANGLE' &&
-		figma.currentPage.selection[0].type !== 'INSTANCE'
-	) {
-		figma.notify(
-			`Your current selection is a ${figma.currentPage.selection[0].type}. Please choose a vector or rectangle.`
-		);
-		figma.closePlugin();
-	}
-
-	if (
-		figma.currentPage.selection[0].type === 'RECTANGLE' &&
-		figma.currentPage.selection[0].parent.parent.parent.type !== 'INSTANCE'
-	) {
-		console.log('rectangle not in an instance');
+		console.log('rectangle is not in an instance');
 		// for regular rectangle that are not in an instance
 		convertedNode = vectorConversion(figma.currentPage.selection[0]);
 
@@ -292,18 +367,25 @@ try {
 							);
 						}
 					}
-
-					if (uiResponse.type === 'networkResponse') {
-						// needs filling
-					}
 				} catch (error) {}
+				if (uiResponse.type === 'networkResponse') {
+					console.log('currentSelection: ', figma.currentPage.selection[0]);
+					const cloneOfScreen = clone(convertedNode.fills);
+					const selectedImage = angleFill(uiResponse.response, convertedNode);
+					if (cloneOfScreen.length > 1) {
+						const c = cloneOfScreen.slice(1);
+						c[0] = selectedImage[0];
+						convertedNode.fills = c;
+					}
+					figma.closePlugin();
+				}
 			});
 		}
 	}
 
 	if (
-		figma.currentPage.selection[0].type === 'RECTANGLE' &&
-		figma.currentPage.selection[0].parent.parent.parent.type === 'INSTANCE'
+		figma.currentPage.selection[0].parent.parent.parent.type === 'INSTANCE' &&
+		figma.currentPage.selection[0].type === 'RECTANGLE'
 	) {
 		console.log('rectangle is in instance');
 		const a = figma.currentPage.selection[0].clone();
@@ -352,6 +434,7 @@ try {
 					}
 				}
 			} catch (error) {}
+
 			if (uiResponse.type === 'networkResponse') {
 				// uiResponse.response
 				const selectedImage = angleFill(
@@ -371,65 +454,13 @@ try {
 				figma.closePlugin();
 			}
 		});
-	} else if (
+	}
+
+	if (
 		figma.currentPage.selection[0].type === 'RECTANGLE' &&
-		figma.currentPage.selection[0].parent.parent
+		figma.currentPage.selection[0].parent.parent.type === 'INSTANCE'
 	) {
 		figma.closePlugin();
 		figma.notify('could not find the root node');
-	} else if (figma.currentPage.selection[0].type === 'VECTOR') {
-		console.log('the node is a vector');
-		const names = getAllNodeNames();
-		figma.ui.postMessage({ type: 'allNodeNames', nodeNames: names });
-
-		// checkForNodeFills(figma.currentPage.selection[0]);
-		// networkRequest(figma.currentPage.selection[0]);
-
-		figma.ui.on('message', uiResponse => {
-			try {
-				if (uiResponse.type === 'cancel-modal') {
-					figma.closePlugin();
-				}
-
-				if (uiResponse.type === 'netWorkError') {
-					figma.notify(uiResponse.message);
-				}
-
-				if (uiResponse.type === 'cloudinaryError') {
-					figma.closePlugin();
-					figma.notify(uiResponse.message);
-				}
-
-				if (uiResponse.selectedArtboard.length === 0) {
-					figma.closePlugin();
-					figma.notify('Please choose an artboard');
-				}
-
-				if (uiResponse.type === 'convertSelectedArtboard') {
-					if (uiResponse.selectedArtboard.length !== 0) {
-						const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
-						angleArtboard(
-							figma.currentPage.selection[0],
-							selectedNode,
-							uiResponse.orientation,
-							uiResponse.pixel,
-							uiResponse.quality,
-							getCoordinates(figma.currentPage.selection[0]),
-							figma.currentPage.selection[0].width,
-							figma.currentPage.selection[0].height
-						);
-					}
-				}
-
-				if (uiResponse.type === 'networkResponse') {
-					// needs filling
-				}
-			} catch (error) {}
-		});
 	}
-
-	// check for vectors
-
-	console.log(figma.currentPage.selection);
-	console.log(vectorNode);
 } catch (error) {}
