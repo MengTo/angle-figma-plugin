@@ -2,8 +2,8 @@ try {
 	figma.showUI(__html__, { width: 790, height: 500 });
 
 	// Will Loop Over All The Nodes And Return The Selected Node
-	function findSelectedNode(selectedNodeName) {
-		var result;
+	function findSelectedNode(selectedNodeName: string) {
+		var result: SceneNode;
 		allFigmaNodes.filter(node => {
 			if (node.name === selectedNodeName) {
 				result = node;
@@ -25,7 +25,7 @@ try {
 		}
 	}
 	// Returns The Byte Of The Node If It Is A Group || Frame
-	async function invertNode(node) {
+	async function invertNode(node: SceneNode) {
 		// figma.currentPage.selection[0].parent.exportAsync().then(response => console.log(response));
 		const unit8 = await node.exportAsync({
 			format: 'PNG',
@@ -34,7 +34,7 @@ try {
 		return unit8;
 	}
 
-	function angleFill(array, node) {
+	function angleFill(array: Uint8Array, node) {
 		const newFills = [];
 		for (const paint of node.fills) {
 			if (paint.type === 'IMAGE') {
@@ -98,9 +98,18 @@ try {
 	if (figma.currentPage.selection[0].type === 'INSTANCE') {
 		try {
 			const instanceNodeNames = [];
-			var convertedNode = {};
+			var convertedNode = {} as VectorNode;
 			var selectedNode;
-			const coordinates = {};
+			const coordinates = {
+				topLeftX: undefined,
+				topLeftY: undefined,
+				topRightX: undefined,
+				topRightY: undefined,
+				bottomLeftX: undefined,
+				bottomLeftY: undefined,
+				bottomRightX: undefined,
+				bottomRightY: undefined,
+			};
 			// loop over all the names and push all the frames
 			figma.currentPage.children.map(function(node) {
 				if (node.type === 'FRAME') {
@@ -141,39 +150,39 @@ try {
 						});
 
 						if (
-							figma.currentPage.selection[0].masterComponent.children[0].type ===
+							figma.currentPage.selection[0].type ===
 							'VECTOR'
 						) {
 							// TOP LEFT
 							coordinates.topLeftX =
-								figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[0].x;
+								figma.currentPage.selection[0].vectorNetwork.vertices[0].x;
 							coordinates.topLeftY =
-								figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[0].y;
+								figma.currentPage.selection[0].vectorNetwork.vertices[0].y;
 							// TOP RIGHT
 							coordinates.topRightX =
-								figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[1].x;
+								figma.currentPage.selection[0].vectorNetwork.vertices[1].x;
 							coordinates.topRightY =
-								figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[1].y;
+								figma.currentPage.selection[0].vectorNetwork.vertices[1].y;
 							// BOTTOM LEFT
 							coordinates.bottomLeftX =
-								figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[2].x;
+								figma.currentPage.selection[0].vectorNetwork.vertices[2].x;
 							coordinates.bottomLeftY =
-								figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[2].y;
+								figma.currentPage.selection[0].vectorNetwork.vertices[2].y;
 							//  BOTTOM RIGHT
 							coordinates.bottomRightX =
-								figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[3].x;
+								figma.currentPage.selection[0].vectorNetwork.vertices[3].x;
 							coordinates.bottomRightY =
-								figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[3].y;
+								figma.currentPage.selection[0].vectorNetwork.vertices[3].y;
 
 							angleArtboard(
-								figma.currentPage.selection[0].masterComponent.children[0],
+								figma.currentPage.selection[0],
 								selectedNode,
 								uiResponse.orientation,
 								uiResponse.pixel,
 								uiResponse.quality,
 								coordinates,
-								figma.currentPage.selection[0].masterComponent.children[0].width,
-								figma.currentPage.selection[0].masterComponent.children[0].height
+								figma.currentPage.selection[0].width,
+								figma.currentPage.selection[0].height
 							);
 						}
 
@@ -219,19 +228,19 @@ try {
 					}
 
 					if (
-						figma.currentPage.selection[0].masterComponent.children[0].type === 'VECTOR'
+						figma.currentPage.selection[0].type === 'VECTOR'
 					) {
 						const cloneOfScreen = clone(
-							figma.currentPage.selection[0].masterComponent.children[0].fills
+							figma.currentPage.selection[0].fills
 						);
 						const selectedImage = angleFill(
 							uiResponse.response,
-							figma.currentPage.selection[0].masterComponent.children[0]
+							figma.currentPage.selection[0]
 						);
 						if (cloneOfScreen.length > 1) {
 							const c = cloneOfScreen.slice(1);
 							c[0] = selectedImage[0];
-							figma.currentPage.selection[0].masterComponent.children[0].fills = c;
+							figma.currentPage.selection[0].fills = c;
 						}
 						figma.closePlugin();
 					}
@@ -280,7 +289,7 @@ try {
 		figma.currentPage.selection[0].fills = fills;
 	}
 
-	var convertedNode = {};
+	var convertedNode = {} as VectorNode;
 	// NOTE Convert Rectangle Node to Vector Node
 	if (figma.currentPage.selection[0].type === 'RECTANGLE') {
 		// NOTE faltten the currentSelection to convert to vector -> this will lose the currentSelection value
@@ -355,7 +364,16 @@ NOTE Steps For The Angle Fill (Perspective Transform)
 				if (uiResponse.selectedArtboard.length !== 0) {
 					const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
 
-					const coordinates = {};
+					const coordinates = {
+						topLeftX: undefined,
+						topLeftY: undefined,
+						topRightX: undefined,
+						topRightY: undefined,
+						bottomLeftX: undefined,
+						bottomLeftY: undefined,
+						bottomRightX: undefined,
+						bottomRightY: undefined,
+					};
 
 					// console.log('currentSelection', currentUserSelection);
 					// console.log('convertedNode', convertedNode);

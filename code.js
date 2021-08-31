@@ -97,7 +97,16 @@ try {
             const instanceNodeNames = [];
             var convertedNode = {};
             var selectedNode;
-            const coordinates = {};
+            const coordinates = {
+                topLeftX: undefined,
+                topLeftY: undefined,
+                topRightX: undefined,
+                topRightY: undefined,
+                bottomLeftX: undefined,
+                bottomLeftY: undefined,
+                bottomRightX: undefined,
+                bottomRightY: undefined,
+            };
             // loop over all the names and push all the frames
             figma.currentPage.children.map(function (node) {
                 if (node.type === 'FRAME') {
@@ -125,29 +134,29 @@ try {
                                 selectedNode = node;
                             }
                         });
-                        if (figma.currentPage.selection[0].masterComponent.children[0].type ===
+                        if (figma.currentPage.selection[0].type ===
                             'VECTOR') {
                             // TOP LEFT
                             coordinates.topLeftX =
-                                figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[0].x;
+                                figma.currentPage.selection[0].vectorNetwork.vertices[0].x;
                             coordinates.topLeftY =
-                                figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[0].y;
+                                figma.currentPage.selection[0].vectorNetwork.vertices[0].y;
                             // TOP RIGHT
                             coordinates.topRightX =
-                                figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[1].x;
+                                figma.currentPage.selection[0].vectorNetwork.vertices[1].x;
                             coordinates.topRightY =
-                                figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[1].y;
+                                figma.currentPage.selection[0].vectorNetwork.vertices[1].y;
                             // BOTTOM LEFT
                             coordinates.bottomLeftX =
-                                figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[2].x;
+                                figma.currentPage.selection[0].vectorNetwork.vertices[2].x;
                             coordinates.bottomLeftY =
-                                figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[2].y;
+                                figma.currentPage.selection[0].vectorNetwork.vertices[2].y;
                             //  BOTTOM RIGHT
                             coordinates.bottomRightX =
-                                figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[3].x;
+                                figma.currentPage.selection[0].vectorNetwork.vertices[3].x;
                             coordinates.bottomRightY =
-                                figma.currentPage.selection[0].masterComponent.children[0].vectorNetwork.vertices[3].y;
-                            angleArtboard(figma.currentPage.selection[0].masterComponent.children[0], selectedNode, uiResponse.orientation, uiResponse.pixel, uiResponse.quality, coordinates, figma.currentPage.selection[0].masterComponent.children[0].width, figma.currentPage.selection[0].masterComponent.children[0].height);
+                                figma.currentPage.selection[0].vectorNetwork.vertices[3].y;
+                            angleArtboard(figma.currentPage.selection[0], selectedNode, uiResponse.orientation, uiResponse.pixel, uiResponse.quality, coordinates, figma.currentPage.selection[0].width, figma.currentPage.selection[0].height);
                         }
                         if (convertedNode.type === 'VECTOR') {
                             console.log(true);
@@ -178,13 +187,13 @@ try {
                         }
                         figma.closePlugin();
                     }
-                    if (figma.currentPage.selection[0].masterComponent.children[0].type === 'VECTOR') {
-                        const cloneOfScreen = clone(figma.currentPage.selection[0].masterComponent.children[0].fills);
-                        const selectedImage = angleFill(uiResponse.response, figma.currentPage.selection[0].masterComponent.children[0]);
+                    if (figma.currentPage.selection[0].type === 'VECTOR') {
+                        const cloneOfScreen = clone(figma.currentPage.selection[0].fills);
+                        const selectedImage = angleFill(uiResponse.response, figma.currentPage.selection[0]);
                         if (cloneOfScreen.length > 1) {
                             const c = cloneOfScreen.slice(1);
                             c[0] = selectedImage[0];
-                            figma.currentPage.selection[0].masterComponent.children[0].fills = c;
+                            figma.currentPage.selection[0].fills = c;
                         }
                         figma.closePlugin();
                     }
@@ -287,7 +296,16 @@ NOTE Steps For The Angle Fill (Perspective Transform)
             if (uiResponse.type === 'convertSelectedArtboard') {
                 if (uiResponse.selectedArtboard.length !== 0) {
                     const selectedNode = findSelectedNode(uiResponse.selectedArtboard);
-                    const coordinates = {};
+                    const coordinates = {
+                        topLeftX: undefined,
+                        topLeftY: undefined,
+                        topRightX: undefined,
+                        topRightY: undefined,
+                        bottomLeftX: undefined,
+                        bottomLeftY: undefined,
+                        bottomRightX: undefined,
+                        bottomRightY: undefined,
+                    };
                     // console.log('currentSelection', currentUserSelection);
                     // console.log('convertedNode', convertedNode);
                     if (currentUserSelection !== undefined &&
