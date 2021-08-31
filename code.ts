@@ -1,7 +1,5 @@
 try {
-	if (figma.command === 'applyMockup') {
-		figma.showUI(__html__, { width: 790, height: 500 });
-	}
+	figma.showUI(__html__, { width: 790, height: 500 });
 
 	// Will Loop Over All The Nodes And Return The Selected Node
 	function findSelectedNode(selectedNodeName) {
