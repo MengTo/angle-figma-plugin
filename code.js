@@ -415,8 +415,20 @@ NOTE Steps For The Angle Fill (Perspective Transform)
             console.log(uiResponse);
         }
         catch (error) {
-            console.log('loading...');
+            console.log(`Error: ${error}`);
+            if (String(error).includes('Image is too large')) {
+                figma.notify('Error: Image is too large. Reduce the mockup size before applying artboard.');
+                figma.closePlugin();
+            }
+            else {
+                figma.notify(`Error: ${error}`);
+                figma.closePlugin();
+            }
         }
     });
 }
-catch (error) { }
+catch (error) {
+    console.log(`Error: ${error}`);
+    figma.notify(`Error: ${error}`);
+    figma.closePlugin();
+}
