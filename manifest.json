@@ -6,5 +6,15 @@
   "ui": "ui.html",
   "editorType": [
     "figma"
-  ]
+  ],
+  "networkAccess": {
+    "allowedDomains": [
+      "api.cloudinary.com",
+      "res.cloudinary.com"
+    ],
+    "reasoning": "This plugin needs to access Cloudinary's API for image uploading and manipulation.",
+    "devAllowedDomains": [
+      "http://localhost:3000"
+    ]
+  }
 }
